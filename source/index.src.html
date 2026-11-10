@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orion Syndic</title>
+<link rel="icon" href="{{FAVICON}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Ardoise des toits et grès des façades luxembourgeoises. Fil conducteur : la coupe d'immeuble et ses millièmes. */
+  --bg:#ECEEEA; --surface:#F9FAF8; --surface-2:#F1F3EF; --ink:#1C252F; --muted:#56616D; --line:#CDD2CC;
+  --accent:#B0801F; --accent-ink:#835D10; --accent-soft:#F2E7CD; --on-accent:#1A1305; --roof:#2A3540;
+  --ok:#2C7A4B; --ok-soft:#DCEFE3; --pend:#2F5E93; --pend-soft:#DDE7F3; --bad:#B0281F; --bad-soft:#F6DEDB;
+  --f-display:"Big Shoulders Display","Arial Narrow",sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --brand:#2F5E93; --on-brand:#fff;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11161C; --surface:#18202A; --surface-2:#1E2732; --ink:#E6E9E4; --muted:#9BA5AF; --line:#2E3946;
+    --accent:#D6A23E; --accent-ink:#E8BC62; --accent-soft:#3A2F17; --on-accent:#1A1305; --roof:#0A0E12;
+    --ok:#5BBF84; --ok-soft:#1B3427; --pend:#82AAD9; --pend-soft:#1C2B3D; --bad:#EF7B71; --bad-soft:#3E201D;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11161C; --surface:#18202A; --surface-2:#1E2732; --ink:#E6E9E4; --muted:#9BA5AF; --line:#2E3946;
+  --accent:#D6A23E; --accent-ink:#E8BC62; --accent-soft:#3A2F17; --on-accent:#1A1305; --roof:#0A0E12;
+  --ok:#5BBF84; --ok-soft:#1B3427; --pend:#82AAD9; --pend-soft:#1C2B3D; --bad:#EF7B71; --bad-soft:#3E201D;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--f-display);line-height:1;margin:0;text-wrap:balance}
+p{margin:0 0 1em}
+a{color:inherit}
+img{max-width:100%}
+[hidden]{display:none!important}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:.84rem}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+@media (max-width:480px){.wrap{padding:0 16px}}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+
+/* ---------- barre démo + en-tête ---------- */
+.demo-bar{background:var(--roof);color:#E9ECE8;font-size:.8rem;text-align:center;padding:6px 16px}
+header.top{position:sticky;top:0;z-index:20;background:var(--bg);background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;gap:20px;height:66px}
+.brand{display:flex;align-items:center;text-decoration:none;flex:none}
+.brand .logo{height:36px;width:auto;display:block}
+#top-nav{display:flex;align-items:center;gap:22px;margin-left:auto;min-width:0}
+.top-links{display:flex;gap:22px}
+.top-links a{text-decoration:none;color:var(--muted);font-weight:500;font-size:.95rem}
+.top-links a:hover{color:var(--ink)}
+.top-actions{display:flex;gap:8px;align-items:center}
+.top-cab{display:flex;align-items:center;gap:10px;font-weight:600;min-width:0}
+.top-cab span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:820px){.top-links{display:none}}
+@media (max-width:420px){.brand .logo{height:30px}.top-cab span{display:none}}
+
+/* ---------- boutons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 .95rem/1.1 var(--f-body);padding:11px 16px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;cursor:pointer;transition:transform .12s,border-color .15s,filter .15s;white-space:nowrap}
+.btn:hover{border-color:var(--ink)}
+.btn:active{transform:translateY(1px)}
+.btn-ink{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn-accent{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn-accent:hover,.btn-ink:hover{filter:brightness(1.08);border-color:transparent}
+.btn-lg{padding:15px 22px;font-size:1.02rem}
+.btn-sm{padding:7px 11px;font-size:.84rem}
+.btn[disabled]{opacity:.6;cursor:progress}
+.danger{color:var(--bad)}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font:inherit;padding:0}
+
+/* ---------- accueil : hero ---------- */
+.hero{padding:56px 0 72px}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.kicker{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 18px}
+.hero h1{font-size:clamp(3rem,7vw,5.7rem);font-weight:800;line-height:.92;letter-spacing:.005em}
+.hero h1 em{font-style:normal;color:var(--accent-ink)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:52ch;margin:22px 0 28px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+.hero-note{margin-top:18px;font-size:.9rem;color:var(--muted)}
+.hero-note b{color:var(--ink)}
+@media (max-width:920px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+
+.coupe{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 20px 16px;box-shadow:0 22px 44px -28px rgba(20,28,36,.45)}
+.coupe-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:18px}
+.coupe-title{font-weight:700;display:block}
+.coupe-sub{color:var(--muted);font-size:.85rem}
+.amount{display:grid;gap:4px}
+.amount label{font-size:.78rem;font-weight:600;color:var(--muted)}
+.amount-in{display:flex;align-items:center;gap:6px;border:1.5px solid var(--ink);border-radius:8px;background:var(--bg);padding:0 12px}
+.amount-in input{border:0;background:transparent;font:500 1.25rem var(--f-mono);width:8.5ch;padding:8px 0;color:var(--ink);text-align:right}
+.amount-in input:focus{outline:none}
+.amount-in:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.roof{height:44px;margin:0 2px;background:repeating-linear-gradient(0deg,var(--roof) 0 7px,color-mix(in srgb,var(--roof) 75%,#9aa6b2) 7px 8px);clip-path:polygon(6% 100%,24% 0,76% 0,94% 100%)}
+.facade{border:1.5px solid var(--ink);border-top-width:3px;background:var(--surface-2);padding:10px;display:grid;gap:9px;margin:0 8px}
+.floor{display:grid;grid-template-columns:40px 1fr 1fr;gap:9px}
+.level{font:500 .7rem var(--f-mono);color:var(--muted);display:flex;align-items:center}
+.apt{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:4px;padding:7px 10px;display:grid;grid-template-columns:1fr auto;row-gap:1px}
+.apt .lot{font:500 .72rem var(--f-mono);color:var(--muted)}
+.apt .mil{font:600 .78rem var(--f-mono);color:var(--accent-ink);text-align:right}
+.apt .part{grid-column:1/-1;font:500 1.04rem var(--f-mono);font-variant-numeric:tabular-nums}
+.part.flash{animation:flash .55s ease-out}
+@keyframes flash{from{background:var(--accent-soft)}to{background:transparent}}
+.ground{height:12px;border-top:1.5px solid var(--ink);background:repeating-linear-gradient(135deg,var(--line) 0 2px,transparent 2px 7px)}
+.coupe figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-top:12px;font-size:.88rem;color:var(--muted)}
+.coupe figcaption b{color:var(--ink);font-family:var(--f-mono);font-weight:600}
+.ok-mark{color:var(--ok);font-weight:600}
+
+/* ---------- sections ---------- */
+section.block{padding:76px 0;border-top:1px solid var(--line);scroll-margin-top:70px}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:32px;align-items:end;margin-bottom:36px}
+.sec-head h2{font-size:clamp(2.3rem,4.6vw,3.5rem);font-weight:800}
+.sec-head p{color:var(--muted);margin:0;max-width:60ch}
+@media (max-width:820px){.sec-head{grid-template-columns:1fr;gap:14px}}
+
+.compare{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.cmp-row{display:grid;grid-template-columns:210px 1fr 1fr;border-top:1px solid var(--line)}
+.cmp-row:first-child{border-top:0}
+.cmp-row>div{padding:15px 18px}
+.cmp-head{background:var(--surface-2);font:600 .74rem var(--f-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.cmp-task{font-weight:700}
+.cmp-old{color:var(--muted)}
+.cmp-new{box-shadow:inset 3px 0 0 var(--accent)}
+@media (max-width:720px){.cmp-row{grid-template-columns:1fr}.cmp-row.cmp-head{display:none}.cmp-row>div{padding:4px 16px}.cmp-task{padding-top:16px!important}.cmp-new{padding-bottom:16px!important}.cmp-old::before{content:"Avec Excel : ";font-weight:600;color:var(--ink)}.cmp-new::before{content:"Avec Orion Syndic : ";font-weight:600}}
+
+.feats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.feat{background:var(--surface);padding:24px 22px 26px}
+.tag{font:500 .76rem var(--f-mono);color:var(--accent-ink);background:var(--accent-soft);padding:3px 8px;border-radius:4px;display:inline-block}
+.feat h3{font-size:1.65rem;font-weight:800;margin:14px 0 8px}
+.feat p{margin:0;color:var(--muted)}
+@media (max-width:900px){.feats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.feats{grid-template-columns:1fr}}
+
+/* aperçus de l'application */
+.tour-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.tour-tab{display:flex;align-items:center;gap:10px;font:600 .92rem var(--f-body);padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.tour-tab .n{font:500 .78rem var(--f-mono);color:var(--accent-ink)}
+.tour-tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tour-tab[aria-selected="true"] .n{color:var(--accent)}
+.tour-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start}
+.tour-cap h3{font-size:1.9rem;font-weight:800;margin-bottom:10px}
+.tour-cap p{color:var(--muted)}
+.tour-cap ol{margin:0;padding-left:1.2em;color:var(--muted);display:grid;gap:6px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:920px){.tour-grid{grid-template-columns:1fr}}
+@media (max-width:640px){.duo{grid-template-columns:1fr}}
+.shot{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);box-shadow:0 26px 50px -34px rgba(20,28,36,.55)}
+.shot-bar{display:flex;align-items:center;gap:7px;padding:9px 12px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.shot-bar i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.shot-bar span{margin-left:8px;font:500 .74rem var(--f-mono);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.shot-vp{position:relative;overflow:hidden;height:300px}
+.shot-inner{width:1180px;transform-origin:0 0;pointer-events:none;position:absolute;left:0;top:0}
+.shot-inner .app{min-height:740px}
+
+/* prix */
+.price-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:44px;align-items:center}
+.price-big{font-family:var(--f-display);font-weight:800;font-size:clamp(7rem,16vw,12rem);line-height:.8;color:var(--accent)}
+.price-unit{font-size:1.3rem;font-weight:700;margin-top:12px}
+.price-fee{display:inline-block;margin-top:12px;font-weight:600;background:var(--accent-soft);color:var(--accent-ink);padding:6px 10px;border-radius:6px}
+.price-list{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:8px;color:var(--muted)}
+.price-list li{display:flex;gap:10px;align-items:baseline}
+.price-list li::before{content:"";flex:none;width:8px;height:8px;background:var(--accent);transform:translateY(-1px)}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px}
+.calc>label{font-weight:700;font-size:1.05rem}
+.calc-in{display:flex;gap:14px;align-items:center;margin:12px 0 4px}
+.calc-in input[type=number]{width:120px;font:500 1.2rem var(--f-mono)}
+input[type=range]{flex:1;accent-color:var(--accent);min-width:0}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 20px}
+.chip-btn{font:500 .84rem var(--f-body);padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);cursor:pointer}
+.chip-btn.on,.chip-btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.calc-out{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-top:1px dashed var(--line);padding-top:18px}
+.calc-out span{display:block;font-size:.8rem;color:var(--muted)}
+.calc-out b{font:500 1.45rem var(--f-mono);display:block}
+.calc-out .big b{font-size:1.9rem;color:var(--accent-ink)}
+.calc .btn{width:100%;margin-top:20px}
+@media (max-width:860px){.price-grid{grid-template-columns:1fr}}
+@media (max-width:480px){.calc-out{grid-template-columns:1fr 1fr}.calc-out .big{grid-column:1/-1}}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.step{border-top:3px solid var(--ink);padding-top:16px}
+.step .n{font:500 .85rem var(--f-mono);color:var(--accent-ink)}
+.step h3{font-size:1.55rem;margin:8px 0 6px;font-weight:800}
+.step p{margin:0;color:var(--muted)}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.steps{grid-template-columns:1fr}}
+
+.faq{max-width:820px}
+details{border-top:1px solid var(--line)}
+details:last-child{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;padding:17px 0;font-weight:600;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-mono);color:var(--accent-ink);font-size:1.1rem}
+details[open] summary::after{content:"−"}
+details p{margin:0 0 18px;color:var(--muted);max-width:68ch}
+
+.cta-band{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;background:var(--roof);color:#EEF0EC;border-radius:16px;padding:32px}
+.cta-band h2{font-size:clamp(2rem,4vw,2.9rem);font-weight:800;color:#fff}
+.cta-band p{margin:8px 0 0;color:#B9C2CB}
+
+footer.foot{border-top:1px solid var(--line);padding:30px 0 44px;color:var(--muted);font-size:.86rem}
+.foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
+.foot .logo{height:28px;width:auto;display:block}
+body[data-view="app"] .foot{display:none}
+
+/* ---------- formulaires ---------- */
+.auth{padding:44px 0 76px}
+.auth-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:32px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px}
+.auth-h{font-size:clamp(2.2rem,4vw,2.8rem);font-weight:800;margin-bottom:16px}
+.field{display:grid;gap:6px;margin-bottom:16px;min-width:0}
+.field label,.lbl{font-weight:600;font-size:.9rem}
+.field small{color:var(--muted);font-size:.8rem}
+input[type=text],input[type=email],input[type=password],input[type=number],input[type=date],input[type=tel],select,textarea{font:inherit;font-size:.97rem;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;min-width:0}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-err{color:var(--bad);font-weight:600;min-height:1.3em;margin:2px 0 10px;font-size:.9rem}
+.stepper{display:flex;gap:6px;margin-bottom:22px;flex-wrap:wrap}
+.stepper span{font:500 .76rem var(--f-mono);padding:5px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.stepper span.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.stepper span.done{color:var(--ok);border-color:var(--ok)}
+.sum{position:sticky;top:90px}
+.sum h3{font-size:1.6rem;font-weight:800;margin-bottom:12px}
+.sum-line{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.sum-line span:last-child{text-align:right}
+.sum-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:14px}
+.sum-total b{font:500 1.8rem var(--f-mono)}
+.demo-note{font-size:.84rem;color:var(--muted);background:var(--surface-2);border:1px dashed var(--line);border-radius:8px;padding:10px 12px;margin-top:14px}
+fieldset{border:0;padding:0;margin:14px 0}
+legend{font-weight:600;margin-bottom:8px;font-size:.9rem}
+.radio,.check{display:flex;gap:10px;align-items:center;padding:11px 12px;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;cursor:pointer;background:var(--bg)}
+.radio:has(input:checked){border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.swatches{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sw{width:34px;height:34px;border-radius:8px;border:2px solid var(--surface);box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink)}
+input[type=color]{width:44px;height:36px;padding:2px;border:1px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
+.logo-drop{display:flex;align-items:center;gap:14px;padding:12px;border:1px dashed var(--line);border-radius:10px;background:var(--bg)}
+.logo-drop .prev{width:56px;height:56px;border-radius:10px;display:grid;place-items:center;overflow:hidden;background:var(--surface-2);flex:none}
+.logo-drop .prev img{max-width:100%;max-height:100%}
+.mini{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface-2);margin-top:6px}
+.mini-top{display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid var(--line);background:var(--surface)}
+.mini-top strong{font-size:.95rem;line-height:1.2}
+.mini-nav{padding:10px;display:grid;gap:4px}
+.mini-nav span{font-size:.84rem;padding:7px 10px;border-radius:6px}
+.mini-nav span.on{background:var(--brand);color:var(--on-brand);font-weight:600}
+@media (max-width:860px){.auth-grid{grid-template-columns:1fr}.sum{position:static}}
+@media (max-width:520px){.row2{grid-template-columns:1fr}.panel{padding:20px}}
+
+/* ---------- application ---------- */
+.app{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:calc(100vh - 100px);background:var(--bg)}
+.side{border-right:1px solid var(--line);padding:20px 14px;background:var(--surface-2);display:flex;flex-direction:column;gap:14px}
+.side-cab{display:flex;align-items:center;gap:11px;padding:4px 8px 16px;border-bottom:1px solid var(--line)}
+.side-cab strong{font-size:.98rem;line-height:1.2;display:block}
+.side-cab small{color:var(--muted);font-size:.74rem}
+.cab-mark{width:44px;height:44px;border-radius:10px;flex:none;display:grid;place-items:center;overflow:hidden}
+.cab-mark img{max-width:100%;max-height:100%;object-fit:contain}
+.cab-mono{background:var(--brand);color:var(--on-brand);font:700 1rem var(--f-body);letter-spacing:.02em}
+.cab-img{background:#fff;border:1px solid var(--line)}
+.cab-mark.sm{width:30px;height:30px;border-radius:7px;font-size:.78rem}
+.side-nav{display:grid;gap:2px}
+.side-link{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;font:500 .93rem var(--f-body);padding:9px 10px;border-radius:7px;border:0;background:none;color:var(--ink);cursor:pointer}
+.side-link:hover{background:var(--surface)}
+.side-link.on{background:var(--brand);color:var(--on-brand);font-weight:600}
+.badge{font:600 .7rem var(--f-mono);background:var(--bad);color:#fff;border-radius:999px;padding:1px 7px}
+.side-foot{margin-top:auto;font-size:.72rem;color:var(--muted);padding:0 8px}
+.work{padding:28px 32px 56px;min-width:0}
+.w-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:22px}
+.w-head h2{font-size:2.4rem;font-weight:800}
+.w-head p{margin:6px 0 0;color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px;margin-bottom:24px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.tile span{font-size:.8rem;color:var(--muted);display:block}
+.tile b{font:500 1.4rem var(--f-mono);display:block;margin-top:4px;white-space:nowrap}
+.tile.alert{border-color:var(--bad);box-shadow:inset 3px 0 0 var(--bad)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:20px;overflow:hidden}
+.card-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding:13px 18px;border-bottom:1px solid var(--line)}
+.card-h h3{font-family:var(--f-body);font-size:1rem;font-weight:700;line-height:1.3}
+.card-b{padding:16px 18px}
+.card-b+.card-b{border-top:1px solid var(--line)}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.91rem}
+th{text-align:left;font:600 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:10px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+.r{text-align:right}
+td.money{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tfoot td{font-weight:700;border-top:1.5px solid var(--ink);border-bottom:0}
+.pill{display:inline-flex;align-items:center;gap:6px;font:600 .75rem var(--f-body);padding:3px 9px;border-radius:999px;white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.paye{color:var(--ok);background:var(--ok-soft)}
+.pill.attente{color:var(--pend);background:var(--pend-soft)}
+.pill.retard{color:var(--bad);background:var(--bad-soft)}
+.pill.warn{color:var(--accent-ink);background:var(--accent-soft)}
+.acts{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+.app .btn-ink{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.bcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:20px}
+.bcard{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;cursor:pointer;font:inherit;color:inherit;display:grid;gap:10px;transition:border-color .15s,transform .15s;box-shadow:inset 0 3px 0 var(--brand)}
+.bcard:hover{border-color:var(--ink);transform:translateY(-2px)}
+.bcard h3{font-size:1.5rem;font-weight:800}
+.bcard .addr{color:var(--muted);font-size:.86rem}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.inline-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;align-items:end}
+.inline-form .field{margin:0}
+.inline-form .btn{height:44px}
+.inline-form .form-err{grid-column:1/-1;margin:0;min-height:0}
+.bswitch{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.ap-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-bottom:18px}
+.ap{text-align:left;font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;display:grid;gap:6px;align-content:start}
+.ap.on{border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand)}
+.ap .t{font-weight:700}
+.bar{height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--ok)}
+.empty{padding:28px 24px;border:1px dashed var(--line);border-radius:12px;background:var(--surface)}
+.empty h3{font-size:1.7rem;font-weight:800;margin-bottom:8px}
+.dep-row{cursor:pointer}
+.dep-row:hover td{background:var(--surface-2)}
+.dep-row.on td{background:var(--accent-soft)}
+.back{background:none;border:0;color:var(--muted);cursor:pointer;font:inherit;padding:0;margin-bottom:12px}
+.set-grid{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:20px;align-items:start}
+@media (max-width:980px){.set-grid{grid-template-columns:1fr}}
+@media (max-width:860px){#app-root{grid-template-columns:1fr}#app-root .side{border-right:0;border-bottom:1px solid var(--line);padding:10px 12px;gap:8px}#app-root .side-cab{padding:2px 4px 8px}#app-root .side-nav{display:flex;overflow-x:auto;gap:4px;padding-bottom:2px}#app-root .side-link{white-space:nowrap}#app-root .side-foot{display:none}#app-root .work{padding:20px 16px 48px}#app-root .w-head h2{font-size:2rem}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.modal{position:fixed;inset:0;background:rgba(8,12,16,.6);display:grid;place-items:center;padding:16px;z-index:50}
+.modal-box{background:var(--surface);border-radius:14px;max-width:580px;width:100%;padding:22px;border:1px solid var(--line)}
+.modal-box h3{font-size:1.7rem;font-weight:800;margin-bottom:6px}
+.modal-box textarea{min-height:250px;line-height:1.5;font-size:.92rem}
+.modal-acts{display:flex;justify-content:flex-end;gap:8px;margin-top:12px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-weight:600;font-size:.92rem;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body data-view="accueil">
+<div class="demo-bar">Version de démonstration : aucun paiement réel, les comptes et les données restent dans ce navigateur.</div>
+<header class="top"><div class="wrap top-in"><a class="brand" href="#accueil" aria-label="Orion Syndic, accueil">{{LOGO}}</a><div id="top-nav"></div></div></header>
+
+<main>
+<div id="v-accueil">
+  <section class="hero" id="accueil">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker">Logiciel pour syndics de copropriété · Luxembourg</p>
+        <h1>Chaque facture répartie au <em>millième</em> près.</h1>
+        <p class="lede">Orion Syndic remplace vos tableaux Excel. Immeubles, copropriétaires, quotes-parts, appels de fonds, paiements et fonds de travaux : tout est réuni dans un espace en ligne à votre nom, avec votre logo.</p>
+        <div class="hero-cta">
+          <a class="btn btn-accent btn-lg" href="#inscription">Créer mon espace</a>
+          <button class="btn btn-lg" type="button" data-demo>Essayer la démo</button>
+        </div>
+        <p class="hero-note"><b>1 € par lot et par mois</b> + 50 € d'inscription, une seule fois. Caves et parkings ne comptent pas.</p>
+      </div>
+      <figure class="coupe" aria-labelledby="coupe-cap">
+        <div class="coupe-head">
+          <div><span class="coupe-title">Résidence Les Tilleuls</span><span class="coupe-sub">Bertrange · 8 lots · 1000 ‰</span></div>
+          <div class="amount"><label for="hero-amount">Facture à répartir</label><div class="amount-in"><input id="hero-amount" type="text" inputmode="decimal" value="1.240,00" autocomplete="off"><span class="mono">€</span></div></div>
+        </div>
+        <div class="roof" aria-hidden="true"></div>
+        <div class="facade">
+          <div class="floor"><span class="level">3e</span>
+            <div class="apt"><span class="lot">Lot 07</span><span class="mil">140 ‰</span><span class="part" id="part-07">173,60 €</span></div>
+            <div class="apt"><span class="lot">Lot 08</span><span class="mil">185 ‰</span><span class="part" id="part-08">229,40 €</span></div></div>
+          <div class="floor"><span class="level">2e</span>
+            <div class="apt"><span class="lot">Lot 05</span><span class="mil">95 ‰</span><span class="part" id="part-05">117,80 €</span></div>
+            <div class="apt"><span class="lot">Lot 06</span><span class="mil">110 ‰</span><span class="part" id="part-06">136,40 €</span></div></div>
+          <div class="floor"><span class="level">1er</span>
+            <div class="apt"><span class="lot">Lot 03</span><span class="mil">140 ‰</span><span class="part" id="part-03">173,60 €</span></div>
+            <div class="apt"><span class="lot">Lot 04</span><span class="mil">125 ‰</span><span class="part" id="part-04">155,00 €</span></div></div>
+          <div class="floor"><span class="level">RDC</span>
+            <div class="apt"><span class="lot">Lot 01</span><span class="mil">95 ‰</span><span class="part" id="part-01">117,80 €</span></div>
+            <div class="apt"><span class="lot">Lot 02</span><span class="mil">110 ‰</span><span class="part" id="part-02">136,40 €</span></div></div>
+        </div>
+        <div class="ground" aria-hidden="true"></div>
+        <figcaption id="coupe-cap"><span>Total réparti <b id="hero-total">1.240,00 €</b> · <span class="ok-mark">1000 / 1000 ‰</span></span><span>Changez le montant pour voir le calcul.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block" id="excel">
+    <div class="wrap">
+      <div class="sec-head"><h2>Ce que vous faites encore à la main</h2><p>Excel fonctionne, jusqu'au jour où une formule est copiée de travers ou un paiement oublié. Orion Syndic fait les calculs et garde la trace de chaque euro, immeuble par immeuble.</p></div>
+      <div class="compare">
+        <div class="cmp-row cmp-head"><div>Tâche</div><div>Avec Excel</div><div>Avec Orion Syndic</div></div>
+        <div class="cmp-row"><div class="cmp-task">Répartir une facture</div><div class="cmp-old">Formules recopiées pour chaque immeuble, centimes qui ne tombent jamais juste</div><div class="cmp-new">Répartition automatique selon les millièmes, total exact au centime</div></div>
+        <div class="cmp-row"><div class="cmp-task">Appels de fonds</div><div class="cmp-old">Un tableau par trimestre et par immeuble</div><div class="cmp-new">Créés en une fois pour tous les lots, avec l'échéance</div></div>
+        <div class="cmp-row"><div class="cmp-task">Suivre les paiements</div><div class="cmp-old">Relevés comparés ligne par ligne, retards repérés trop tard</div><div class="cmp-new">Retards visibles d'un coup d'œil, rappel rédigé avec votre IBAN</div></div>
+        <div class="cmp-row"><div class="cmp-task">Fonds de travaux</div><div class="cmp-old">Calcul à part, souvent oublié</div><div class="cmp-new">Solde et cotisation de chaque lot toujours à jour</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="apercu">
+    <div class="wrap">
+      <div class="sec-head"><h2>À quoi ressemble votre espace</h2><p>Voici l'application telle que vos équipes la verront, avec des données d'exemple. Choisissez un écran pour voir comment il fonctionne.</p></div>
+      <div class="tour-tabs" role="tablist" aria-label="Écrans de l'application">
+        <button class="tour-tab" role="tab" id="tt-1" aria-controls="tp-1" aria-selected="true" data-tour="1"><span class="n">1</span>Tableau de bord</button>
+        <button class="tour-tab" role="tab" id="tt-2" aria-controls="tp-2" aria-selected="false" data-tour="2"><span class="n">2</span>Répartition d'une facture</button>
+        <button class="tour-tab" role="tab" id="tt-3" aria-controls="tp-3" aria-selected="false" data-tour="3"><span class="n">3</span>Paiements et rappels</button>
+        <button class="tour-tab" role="tab" id="tt-4" aria-controls="tp-4" aria-selected="false" data-tour="4"><span class="n">4</span>Votre logo, vos couleurs</button>
+      </div>
+      <div class="tour-panel" role="tabpanel" id="tp-1" aria-labelledby="tt-1">
+        <div class="tour-grid"><div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span>Orion Syndic · Gérance Démo Sàrl</span></div><div class="shot-vp" data-shot="dashboard"></div></div>
+        <div class="tour-cap"><h3>Tout voir dès la connexion</h3><p>Le tableau de bord résume votre portefeuille.</p><ol><li>Nombre d'immeubles et de lots</li><li>Montants encore à encaisser</li><li>Paiements en retard, en rouge</li><li>Solde total des fonds de travaux</li></ol></div></div>
+      </div>
+      <div class="tour-panel" role="tabpanel" id="tp-2" aria-labelledby="tt-2" hidden>
+        <div class="tour-grid"><div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span>Orion Syndic · Dépenses</span></div><div class="shot-vp" data-shot="depenses"></div></div>
+        <div class="tour-cap"><h3>Une facture, un clic</h3><p>Vous saisissez la date, le fournisseur et le montant.</p><ol><li>L'application lit la quote-part de chaque lot</li><li>Elle calcule la part de chacun</li><li>Le total tombe juste, au centime</li></ol></div></div>
+      </div>
+      <div class="tour-panel" role="tabpanel" id="tp-3" aria-labelledby="tt-3" hidden>
+        <div class="tour-grid"><div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span>Orion Syndic · Paiements</span></div><div class="shot-vp" data-shot="paiements"></div></div>
+        <div class="tour-cap"><h3>Les retards ne passent plus inaperçus</h3><p>Chaque appel de fonds est suivi lot par lot.</p><ol><li>Filtrez les paiements en retard</li><li>Cliquez sur « Rappel »</li><li>Le message est prêt, avec votre IBAN et vos coordonnées</li></ol></div></div>
+      </div>
+      <div class="tour-panel" role="tabpanel" id="tp-4" aria-labelledby="tt-4" hidden>
+        <div class="duo">
+          <div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span>Gérance Démo Sàrl</span></div><div class="shot-vp" data-shot="brandA"></div></div>
+          <div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span>Résidences Moselle Sàrl</span></div><div class="shot-vp" data-shot="brandB"></div></div>
+        </div>
+        <div class="tour-cap" style="margin-top:20px;max-width:70ch"><h3>Un espace à votre image</h3><p>À l'inscription, vous ajoutez votre logo, votre couleur, votre adresse et votre IBAN. L'application les reprend partout, jusque dans les rappels envoyés aux copropriétaires. Chaque cabinet travaille sur la même plateforme, mais ne voit que ses propres données.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="fonctions">
+    <div class="wrap">
+      <div class="sec-head"><h2>Tout le travail du syndic, au même endroit</h2><p>Six modules pensés pour la copropriété luxembourgeoise, régie par la loi du 16 mai 1975.</p></div>
+      <div class="feats">
+        <div class="feat"><span class="tag">‰</span><h3>Immeubles et quotes-parts</h3><p>Chaque lot avec son copropriétaire et ses millièmes. L'application vérifie que le total fait bien 1000.</p></div>
+        <div class="feat"><span class="tag">T1 · T2 · T3 · T4</span><h3>Appels de fonds</h3><p>Indiquez le montant et l'échéance : la part de chaque lot est calculée, puis suivie jusqu'au paiement.</p></div>
+        <div class="feat"><span class="tag">€ / lot</span><h3>Répartition des dépenses</h3><p>Nettoyage, énergie, ascenseur, assurance : chaque facture est répartie au centime près.</p></div>
+        <div class="feat"><span class="tag">Retards</span><h3>Paiements et rappels</h3><p>Voyez qui a payé et qui est en retard. Le rappel est rédigé pour vous, prêt à copier.</p></div>
+        <div class="feat"><span class="tag">Art. 11bis</span><h3>Fonds de travaux</h3><p>Solde, cotisation annuelle et part de chaque lot, comme le prévoit la loi du 30 juin 2022.</p></div>
+        <div class="feat"><span class="tag">Votre logo</span><h3>Votre image</h3><p>Votre logo, votre couleur et vos coordonnées dans l'application et dans chaque rappel.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="prix">
+    <div class="wrap">
+      <div class="sec-head"><h2>Un prix simple</h2><p>Vous payez selon la taille de votre portefeuille. Tous les modules sont compris.</p></div>
+      <div class="price-grid">
+        <div>
+          <div class="price-big">1 €</div>
+          <div class="price-unit">par lot et par mois</div>
+          <div class="price-fee">+ 50 € d'inscription, payés une seule fois</div>
+          <ul class="price-list">
+            <li>Seuls les lots principaux comptent : appartements, commerces, bureaux</li>
+            <li>Caves et parkings inclus sans supplément</li>
+            <li>Tous les modules, quel que soit le nombre d'immeubles</li>
+            <li>Paiement par carte ou domiciliation SEPA</li>
+          </ul>
+        </div>
+        <div class="calc">
+          <label for="calc-num">Combien de lots gérez-vous ?</label>
+          <div class="calc-in"><input id="calc-num" type="number" min="1" max="5000" step="1" value="180"><input id="calc-range" type="range" min="1" max="1000" step="1" value="180" aria-label="Nombre de lots"></div>
+          <div class="muted small" id="calc-hint">soit environ 20 immeubles de 9 logements</div>
+          <div class="presets">
+            <button class="chip-btn" type="button" data-preset="9">1 immeuble · 9 lots</button>
+            <button class="chip-btn" type="button" data-preset="180">20 immeubles · 180 lots</button>
+            <button class="chip-btn" type="button" data-preset="360">40 immeubles · 360 lots</button>
+            <button class="chip-btn" type="button" data-preset="720">80 immeubles · 720 lots</button>
+          </div>
+          <div class="calc-out">
+            <div class="big"><span>Par mois</span><b id="calc-month">180,00 €</b></div>
+            <div><span>À l'inscription</span><b id="calc-first">230,00 €</b></div>
+            <div><span>Par an</span><b id="calc-year">2.160,00 €</b></div>
+          </div>
+          <a class="btn btn-accent btn-lg" id="calc-cta" href="#inscription">Créer mon espace avec 180 lots</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="fonctionnement">
+    <div class="wrap">
+      <div class="sec-head"><h2>Votre espace en quatre étapes</h2><p>L'inscription se fait en ligne, en quelques minutes.</p></div>
+      <div class="steps">
+        <div class="step"><span class="n">Étape 1</span><h3>Votre cabinet</h3><p>Nom du cabinet, personne de contact, e-mail et nombre de lots gérés.</p></div>
+        <div class="step"><span class="n">Étape 2</span><h3>Votre image</h3><p>Logo, couleur, adresse et IBAN. Ils apparaissent dans l'application et dans vos rappels.</p></div>
+        <div class="step"><span class="n">Étape 3</span><h3>Paiement</h3><p>50 € d'inscription et le premier mois, par carte ou domiciliation SEPA.</p></div>
+        <div class="step"><span class="n">Étape 4</span><h3>Connexion</h3><p>Votre espace est prêt. Vous vous connectez avec votre e-mail et votre mot de passe.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="wrap">
+      <div class="sec-head"><h2>Questions fréquentes</h2><p>Une autre question ? Écrivez à info@orionluxembourg.lu ou appelez le +352 27 27 07 11.</p></div>
+      <div class="faq">
+        <details><summary>Comment le prix est-il calculé ?</summary><p>1 € par lot principal et par mois, plus 50 € d'inscription payés une seule fois. Un immeuble de 9 appartements coûte donc 9 € par mois. Les caves et parkings ne sont pas comptés.</p></details>
+        <details><summary>À quoi servent les 50 € d'inscription ?</summary><p>Ils couvrent la création de votre espace personnalisé : votre logo, votre couleur et les coordonnées de votre cabinet. Ils ne sont payés qu'une fois.</p></details>
+        <details><summary>Mes données sont-elles séparées de celles des autres cabinets ?</summary><p>Oui. Chaque cabinet a son propre compte. Après connexion, vous ne voyez que vos immeubles, vos copropriétaires et vos paiements.</p></details>
+        <details><summary>Puis-je reprendre mes fichiers Excel ?</summary><p>Vous pouvez saisir vos immeubles et vos lots directement dans l'application. Si vous gérez beaucoup de lots, contactez-nous pour organiser la reprise de vos fichiers.</p></details>
+        <details><summary>L'application gère-t-elle le fonds de travaux ?</summary><p>Oui. Pour chaque immeuble, vous suivez le solde du fonds, la cotisation annuelle et la part de chaque lot.</p></details>
+        <details><summary>Qui est derrière Orion Syndic ?</summary><p>Orion Syndic est un service d'Orion Multiservices SARL-S, société luxembourgeoise établie à Bertrange.</p></details>
+      </div>
+      <div class="cta-band" style="margin-top:48px">
+        <div><h2>Prêt à quitter Excel ?</h2><p>Créez votre espace aujourd'hui, avec votre logo.</p></div>
+        <div class="hero-cta"><a class="btn btn-accent btn-lg" href="#inscription">Créer mon espace</a><button class="btn btn-lg" type="button" data-demo>Essayer la démo</button></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section id="v-inscription" class="auth" hidden>
+  <div class="wrap auth-grid">
+    <div class="panel"><h1 class="auth-h">Créer votre espace</h1><div class="stepper" id="reg-stepper"></div><div id="reg-main"></div></div>
+    <aside class="panel sum" id="reg-sum" aria-live="polite"></aside>
+  </div>
+</section>
+
+<section id="v-connexion" class="auth" hidden>
+  <div class="wrap auth-grid">
+    <div class="panel">
+      <h1 class="auth-h">Se connecter</h1>
+      <form id="login-form" novalidate>
+        <div class="field"><label for="l-mail">E-mail</label><input id="l-mail" type="email" autocomplete="username" required></div>
+        <div class="field"><label for="l-pw">Mot de passe</label><input id="l-pw" type="password" autocomplete="current-password" required></div>
+        <p class="form-err" id="l-err" role="alert"></p>
+        <button class="btn btn-ink btn-lg" type="submit">Se connecter</button>
+        <p class="small muted" style="margin-top:16px">Pas encore de compte ? <a href="#inscription">Créer mon espace</a></p>
+      </form>
+    </div>
+    <aside class="panel">
+      <h3 style="font-size:1.6rem;font-weight:800;margin-bottom:10px">Compte de démonstration</h3>
+      <p class="muted">Trois résidences d'exemple à Bertrange, Strassen et Esch-sur-Alzette.</p>
+      <p class="mono small">demo@orionsyndic.test<br>demo1234</p>
+      <button class="btn btn-accent" type="button" data-demo>Ouvrir la démo</button>
+    </aside>
+  </div>
+</section>
+
+<section id="v-app" hidden><div class="app" id="app-root"></div></section>
+</main>
+
+<footer class="foot"><div class="wrap foot-in">
+  <div>{{LOGO}}</div>
+  <div>Orion Syndic est un service d'Orion Multiservices SARL-S · 32, rue am Pesch, L-8067 Bertrange · RCS B311098</div>
+  <div>info@orionluxembourg.lu · +352 27 27 07 11</div>
+</div></footer>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="rem-title">
+  <div class="modal-box">
+    <h3 id="rem-title">Rappel de paiement</h3>
+    <p class="muted small">Vérifiez le texte, copiez-le, puis envoyez-le par e-mail ou par courrier.</p>
+    <label class="lbl" for="rem-text">Message</label>
+    <textarea id="rem-text"></textarea>
+    <div class="modal-acts"><button class="btn" type="button" id="rem-close">Fermer</button><button class="btn btn-ink" type="button" id="rem-copy">Copier le texte</button></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const DEMO_EMAIL = "demo@orionsyndic.test", DEMO_PW = "demo1234";
+const PRICE_LOT = 100, SETUP_FEE = 5000; // en centimes
+const CATS = ["Nettoyage","Énergie","Entretien","Ascenseur","Assurance","Jardin","Travaux","Honoraires","Autre"];
+const COLORS = ["#2F5E93","#2C7A4B","#8A3B2E","#5B3F8C","#1C252F","#B0801F","#0E7C86"];
+
+/* ---------- outils ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const eur = c => (c / 100).toLocaleString("fr-LU", {style:"currency", currency:"EUR"});
+const eurPlain = c => (c / 100).toLocaleString("fr-LU", {minimumFractionDigits:2, maximumFractionDigits:2});
+const uid = () => Math.random().toString(36).slice(2, 10);
+const pad = n => String(n).padStart(2, "0");
+const isoOf = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const TODAY = isoOf(new Date());
+const fdate = iso => { const [y, m, d] = String(iso).split("-"); return `${d}/${m}/${y}`; };
+const days = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+const parseAmount = s => { let t = String(s).replace(/[\s  '€]/g, ""); if (t.includes(",")) t = t.replace(/\./g, "").replace(",", "."); else if (/^\d{1,3}(\.\d{3})+$/.test(t)) t = t.replace(/\./g, ""); const n = parseFloat(t); return isFinite(n) && /^-?\d*\.?\d*$/.test(t) ? Math.round(n * 100) : NaN; };
+function split(total, weights) {
+  const sum = weights.reduce((a, b) => a + b, 0);
+  if (!sum || !(total > 0)) return weights.map(() => 0);
+  const raw = weights.map(w => total * w / sum);
+  const base = raw.map(Math.floor);
+  const rest = total - base.reduce((a, b) => a + b, 0);
+  const order = raw.map((r, i) => [r - base[i], i]).sort((a, b) => b[0] - a[0]);
+  for (let k = 0; k < rest; k++) base[order[k % order.length][1]]++;
+  return base;
+}
+function nextQuarter() { const d = new Date(); const q = Math.floor(d.getMonth() / 3) + 1; return isoOf(new Date(d.getFullYear(), q * 3, 1)); }
+function brandVars(color) {
+  const c = /^#[0-9a-f]{6}$/i.test(color || "") ? color : "#2F5E93";
+  const [r, g, b] = [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16) / 255).map(v => v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4));
+  const L = .2126 * r + .7152 * g + .0722 * b;
+  return `--brand:${c};--on-brand:${L > .42 ? "#11161C" : "#FFFFFF"}`;
+}
+function initials(name) {
+  const skip = /^(s\.?a\.?r\.?l\.?(-s)?|sàrl|sarl|sa|s\.a\.|de|du|la|le|les|des|et|&)$/i;
+  const w = String(name || "").split(/\s+/).filter(x => x && !skip.test(x));
+  return ((w[0] || "?")[0] + (w[1] ? w[1][0] : "")).toUpperCase();
+}
+function cabMark(acc, cls = "") {
+  const b = acc.brand || {};
+  return b.logo
+    ? `<span class="cab-mark cab-img ${cls}"><img src="${esc(b.logo)}" alt="Logo ${esc(acc.cabinet)}"></span>`
+    : `<span class="cab-mark cab-mono ${cls}" aria-hidden="true">${esc(initials(acc.cabinet))}</span>`;
+}
+
+/* ---------- stockage (démo : navigateur du visiteur) ---------- */
+const mem = {};
+const store = {
+  get(k) { try { const v = localStorage.getItem(k); if (v !== null) return v; } catch (e) {} return k in mem ? mem[k] : null; },
+  set(k, v) { mem[k] = v; try { localStorage.setItem(k, v); } catch (e) {} },
+  del(k) { delete mem[k]; try { localStorage.removeItem(k); } catch (e) {} }
+};
+let accounts = {};
+function loadAccounts() { try { return JSON.parse(store.get("os_accounts") || "{}") || {}; } catch (e) { return {}; } }
+function saveAccounts() { store.set("os_accounts", JSON.stringify(accounts)); }
+const session = () => store.get("os_session");
+const currentAccount = () => accounts[session()] || null;
+async function sha(s) {
+  try { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join(""); }
+  catch (e) { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0; return "h" + h; }
+}
+
+/* ---------- données d'exemple ---------- */
+function sampleBuildings() {
+  const mk = (nom, adresse, specs, solde, cotisation) => ({ id: uid(), nom, adresse,
+    lots: specs.map(([numero, proprietaire, mil, type = "Appartement"]) => ({ id: uid(), numero, type, proprietaire, mil })),
+    depenses: [], appels: [], fonds: { solde, cotisation } });
+  const dep = (b, date, fournisseur, categorie, montant) => b.depenses.push({ id: uid(), date, fournisseur, categorie, montant });
+  const appel = (b, periode, total, echeance, unpaid) => { const parts = split(total, b.lots.map(l => l.mil));
+    b.appels.push({ id: uid(), periode, total, echeance, lines: b.lots.map((l, i) => ({ lotId: l.id, montant: parts[i], paye: !unpaid.includes(l.numero) })) }); };
+  const b1 = mk("Résidence Les Tilleuls", "12, rue des Prés · L-8080 Bertrange", [
+    ["01","Mme Anne Weber",95],["02","M. Paul Schmit",110],["03","M. et Mme Hoffmann",140],["04","Mme Carla Da Silva",125],
+    ["05","M. Marc Muller",95],["06","Mme Léa Wagner",110],["07","M. Tom Reuter",140],["08","M. et Mme Klein",185]], 1840000, 240000);
+  const b2 = mk("Résidence Belvédère", "5, route d'Arlon · L-8008 Strassen", [
+    ["01","Boulangerie du Coin Sàrl",80,"Commerce"],["02","M. Luc Thill",100],["03","Mme Sandra Kremer",120],["04","M. João Ferreira",100],
+    ["05","Mme Nadia Schroeder",80],["06","M. Yves Majerus",120],["07","Mme Julie Lentz",130],["08","M. Patrick Kieffer",120],["09","M. et Mme Marx",150]], 2615000, 300000);
+  const b3 = mk("Résidence Alzette", "27, rue de l'Alzette · L-4011 Esch-sur-Alzette", [
+    ["01","M. Rui Gonçalves",150],["02","Mme Claire Steffen",170],["03","M. David Bauer",160],["04","Mme Sophie Faber",150],["05","M. Lars Hansen",170],["06","Mme Ana Pereira",200]], 920000, 150000);
+  dep(b1, "2026-10-05", "Nettoyage Moselle Sàrl", "Nettoyage", 42000);
+  dep(b1, "2026-10-18", "Électricité des parties communes", "Énergie", 18640);
+  dep(b1, "2026-11-02", "Assurance immeuble 2027", "Assurance", 124000);
+  dep(b2, "2026-10-12", "Ascenseurs Kirchberg", "Ascenseur", 38500);
+  dep(b2, "2026-10-28", "Nettoyage Moselle Sàrl", "Nettoyage", 51000);
+  dep(b3, "2026-10-20", "Jardin & Haies Sud", "Jardin", 29000);
+  appel(b1, "T3 2026", 240000, "2026-07-01", []);
+  appel(b1, "T4 2026", 240000, "2026-10-01", ["04", "07"]);
+  appel(b2, "T4 2026", 270000, "2026-10-15", ["03"]);
+  appel(b2, "Travaux toiture", 900000, "2026-11-30", ["02", "05", "06", "08"]);
+  appel(b3, "T4 2026", 180000, "2026-10-01", ["06"]);
+  return [b1, b2, b3];
+}
+function demoAccount(pw) {
+  return { cabinet: "Gérance Démo Sàrl", nom: "Sophie Demo", email: DEMO_EMAIL, tel: "+352 20 00 00 00", pw, lotsDeclares: 23, paiement: "Domiciliation SEPA",
+    brand: { color: "#2F5E93", logo: null, adresse: "10, rue de l'Exemple · L-1234 Luxembourg", emailContact: "contact@gerance-demo.test", iban: "LU28 0019 4006 4475 0000", rcs: "B000000" },
+    buildings: sampleBuildings() };
+}
+
+/* ---------- état de l'application ---------- */
+const UI0 = { tab: "dashboard", bId: null, addB: false, delB: false, depB: null, depSel: null, apB: null, apSel: null, fB: null, filter: "retard" };
+let ui = { ...UI0 };
+const TABS = [["dashboard","Tableau de bord"],["immeubles","Immeubles"],["depenses","Dépenses"],["appels","Appels de fonds"],["paiements","Paiements"],["fonds","Fonds de travaux"],["cabinet","Mon cabinet"],["abonnement","Abonnement"]];
+const short = b => b.nom.replace(/^Résidence\s+/i, "");
+const lotsOf = acc => acc.buildings.reduce((s, b) => s + b.lots.length, 0);
+const milSum = b => b.lots.reduce((s, l) => s + (+l.mil || 0), 0);
+const findB = (acc, id) => acc.buildings.find(b => b.id === id);
+function status(a, line) {
+  if (line.paye) return { k: "paye", t: "Payé" };
+  if (a.echeance < TODAY) { const d = days(a.echeance, TODAY); return { k: "retard", t: `En retard · ${d} j`, d }; }
+  return { k: "attente", t: "En attente" };
+}
+function allLines(acc) {
+  const out = [];
+  for (const b of acc.buildings) for (const a of b.appels) for (const line of a.lines)
+    out.push({ b, a, line, lot: b.lots.find(l => l.id === line.lotId), st: status(a, line) });
+  return out;
+}
+function findLine(acc, aId, lotId) {
+  for (const b of acc.buildings) for (const a of b.appels) if (a.id === aId) return { b, a, line: a.lines.find(l => l.lotId === lotId) };
+  return {};
+}
+function pickB(acc, key) {
+  if (!acc.buildings.length) return null;
+  let b = findB(acc, ui[key]);
+  if (!b) { b = acc.buildings[0]; ui[key] = b.id; }
+  return b;
+}
+const sumLines = arr => arr.reduce((s, x) => s + x.line.montant, 0);
+const bSwitch = (acc, key, cur) => `<div class="bswitch" role="tablist" aria-label="Immeuble">${acc.buildings.map(b =>
+  `<button class="chip-btn${b.id === cur.id ? " on" : ""}" role="tab" aria-selected="${b.id === cur.id}" data-act="pickB" data-key="${key}" data-id="${b.id}">${esc(short(b))}</button>`).join("")}</div>`;
+const head = (title, sub, right = "") => `<div class="w-head"><div><h2>${title}</h2>${sub ? `<p>${sub}</p>` : ""}</div>${right}</div>`;
+const needB = title => head(title) + `<div class="empty"><p>Ajoutez d'abord un immeuble avec ses lots.</p><div class="acts" style="justify-content:flex-start"><button class="btn btn-ink" data-act="goAddB">Ajouter un immeuble</button><button class="btn" data-act="loadSample">Charger l'exemple</button></div></div>`;
+
+function linesTable(items, hideB) {
+  return `<div class="tbl-wrap"><table><thead><tr><th>Copropriétaire</th><th>${hideB ? "Lot" : "Immeuble · lot"}</th><th>Appel</th><th>Échéance</th><th class="r">Montant</th><th>Statut</th><th class="r">Actions</th></tr></thead><tbody>${items.map(x => {
+    const ids = `data-a="${x.a.id}" data-l="${x.line.lotId}"`;
+    const acts = x.line.paye ? `<button class="btn btn-sm" data-act="pay" ${ids}>Annuler</button>`
+      : `${x.st.k === "retard" ? `<button class="btn btn-sm" data-act="remind" ${ids}>Rappel</button>` : ""}<button class="btn btn-sm btn-ink" data-act="pay" ${ids}>Marquer payé</button>`;
+    return `<tr><td>${esc(x.lot ? x.lot.proprietaire : "Lot supprimé")}</td><td>${hideB ? "" : esc(short(x.b)) + " · "}${esc(x.lot ? x.lot.numero : "–")}</td><td>${esc(x.a.periode)}</td><td class="mono">${fdate(x.a.echeance)}</td><td class="money">${eur(x.line.montant)}</td><td><span class="pill ${x.st.k}">${x.st.t}</span></td><td><div class="acts">${acts}</div></td></tr>`;
+  }).join("")}</tbody></table></div>`;
+}
+
+/* ---------- écrans ---------- */
+const VIEWS = {
+  dashboard(acc) {
+    if (!acc.buildings.length) return head(`Bienvenue, ${esc(acc.nom || acc.cabinet)}`, "Votre espace est prêt. Commencez par vos immeubles.") +
+      `<div class="empty"><h3>Ajoutez votre premier immeuble</h3><p class="muted" style="max-width:62ch">Indiquez l'adresse, puis les lots avec leur copropriétaire et leur quote-part en millièmes. Vous pouvez aussi charger un exemple avec trois résidences.</p><div class="acts" style="justify-content:flex-start"><button class="btn btn-ink" data-act="goAddB">Ajouter un immeuble</button><button class="btn" data-act="loadSample">Charger l'exemple</button></div></div>`;
+    const lines = allLines(acc), unpaid = lines.filter(x => !x.line.paye);
+    const late = unpaid.filter(x => x.st.k === "retard").sort((a, b) => b.st.d - a.st.d);
+    const fonds = acc.buildings.reduce((s, b) => s + b.fonds.solde, 0);
+    const deps = acc.buildings.flatMap(b => b.depenses.map(d => ({ b, d }))).sort((x, y) => y.d.date.localeCompare(x.d.date)).slice(0, 5);
+    return head("Tableau de bord", `Situation au ${fdate(TODAY)}`) +
+      `<div class="tiles"><div class="tile"><span>Immeubles</span><b>${acc.buildings.length}</b></div><div class="tile"><span>Lots</span><b>${lotsOf(acc)}</b></div>
+       <div class="tile"><span>À encaisser</span><b>${eur(sumLines(unpaid))}</b></div>
+       <div class="tile${late.length ? " alert" : ""}"><span>En retard · ${late.length} paiement${late.length > 1 ? "s" : ""}</span><b>${eur(sumLines(late))}</b></div>
+       <div class="tile"><span>Fonds de travaux</span><b>${eur(fonds)}</b></div></div>
+      <div class="card"><div class="card-h"><h3>Paiements en retard</h3><button class="btn btn-sm" data-act="tab" data-k="paiements">Tous les paiements</button></div>${late.length ? linesTable(late) : `<div class="card-b muted">Aucun paiement en retard.</div>`}</div>
+      <div class="card"><div class="card-h"><h3>Dernières dépenses</h3><button class="btn btn-sm" data-act="tab" data-k="depenses">Ajouter une dépense</button></div><div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Immeuble</th><th>Fournisseur</th><th class="r">Montant</th></tr></thead><tbody>${deps.map(({ b, d }) => `<tr><td class="mono">${fdate(d.date)}</td><td>${esc(short(b))}</td><td>${esc(d.fournisseur)}</td><td class="money">${eur(d.montant)}</td></tr>`).join("") || `<tr><td colspan="4" class="muted">Aucune dépense.</td></tr>`}</tbody></table></div></div>`;
+  },
+
+  immeubles(acc) {
+    if (ui.bId) { const b = findB(acc, ui.bId); if (b) return VIEWS.immeuble(acc, b); ui.bId = null; }
+    const form = ui.addB ? `<div class="card"><div class="card-h"><h3>Nouvel immeuble</h3></div><div class="card-b"><form class="inline-form" data-form="addB">
+      <div class="field"><label for="nb-nom">Nom de la résidence</label><input type="text" id="nb-nom" name="nom" placeholder="Résidence Les Lilas"></div>
+      <div class="field"><label for="nb-adr">Adresse</label><input type="text" id="nb-adr" name="adresse" placeholder="3, rue de la Gare · L-8001 Strassen"></div>
+      <button class="btn btn-accent" type="submit">Créer l'immeuble</button><p class="form-err" role="alert"></p></form></div></div>` : "";
+    const cards = acc.buildings.map(b => { const m = milSum(b); const late = b.appels.reduce((s, a) => s + a.lines.filter(l => status(a, l).k === "retard").length, 0);
+      return `<button class="bcard" data-act="openB" data-id="${b.id}"><h3>${esc(b.nom)}</h3><span class="addr">${esc(b.adresse || "Adresse à compléter")}</span><span class="meta"><span class="pill attente">${b.lots.length} lots</span><span class="pill ${m === 1000 ? "paye" : "warn"}">${m} / 1000 ‰</span>${late ? `<span class="pill retard">${late} en retard</span>` : ""}</span></button>`; }).join("");
+    return head("Immeubles", `${acc.buildings.length} immeuble${acc.buildings.length > 1 ? "s" : ""} · ${lotsOf(acc)} lots`, `<button class="btn btn-ink" data-act="toggleAddB">${ui.addB ? "Fermer" : "Ajouter un immeuble"}</button>`) + form +
+      (acc.buildings.length ? `<div class="bcards">${cards}</div>` : (ui.addB ? "" : `<div class="empty"><p>Aucun immeuble pour l'instant.</p><button class="btn" data-act="loadSample">Charger l'exemple</button></div>`));
+  },
+
+  immeuble(acc, b) {
+    const m = milSum(b);
+    const warn = m !== 1000 ? `<p style="margin:0 0 14px"><span class="pill warn">Total des quotes-parts : ${m} / 1000 ‰ · ${m < 1000 ? `il manque ${1000 - m} ‰` : `${m - 1000} ‰ en trop`}</span></p>` : "";
+    return `<button class="back" data-act="backB">← Tous les immeubles</button>` +
+      head(esc(b.nom), esc(b.adresse || ""), `<button class="btn btn-sm danger" data-act="delB">${ui.delB ? "Cliquez encore pour supprimer" : "Supprimer l'immeuble"}</button>`) + warn +
+      `<div class="card"><div class="card-h"><h3>Lots et quotes-parts</h3><span class="muted mono small">${b.lots.length} lots · ${m} ‰</span></div>
+      <div class="tbl-wrap"><table><thead><tr><th>Lot</th><th>Type</th><th>Copropriétaire</th><th class="r">Quote-part</th><th class="r"><span class="sr">Action</span></th></tr></thead><tbody>${b.lots.map(l =>
+        `<tr><td class="mono">${esc(l.numero)}</td><td>${esc(l.type)}</td><td>${esc(l.proprietaire)}</td><td class="money">${l.mil} ‰</td><td class="r"><button class="btn btn-sm" data-act="delLot" data-id="${l.id}" aria-label="Supprimer le lot ${esc(l.numero)}">Supprimer</button></td></tr>`).join("") ||
+        `<tr><td colspan="5" class="muted">Aucun lot. Ajoutez le premier ci-dessous.</td></tr>`}</tbody></table></div>
+      <div class="card-b"><form class="inline-form" data-form="addLot">
+        <div class="field"><label for="nl-num">N° du lot</label><input type="text" id="nl-num" name="numero" placeholder="${pad(b.lots.length + 1)}"></div>
+        <div class="field"><label for="nl-type">Type</label><select id="nl-type" name="type"><option>Appartement</option><option>Commerce</option><option>Bureau</option></select></div>
+        <div class="field"><label for="nl-prop">Copropriétaire</label><input type="text" id="nl-prop" name="proprietaire" placeholder="Mme Marie Schmit"></div>
+        <div class="field"><label for="nl-mil">Quote-part (‰)</label><input type="number" id="nl-mil" name="mil" min="1" max="1000" placeholder="${Math.max(0, 1000 - m) || ""}"></div>
+        <button class="btn btn-accent" type="submit">Ajouter le lot</button><p class="form-err" role="alert"></p></form></div></div>`;
+  },
+
+  depenses(acc) {
+    if (!acc.buildings.length) return needB("Dépenses");
+    const b = pickB(acc, "depB");
+    const deps = [...b.depenses].sort((x, y) => y.date.localeCompare(x.date));
+    const sel = deps.find(d => d.id === ui.depSel) || deps[0];
+    let splitHtml = "";
+    if (sel) { const parts = split(sel.montant, b.lots.map(l => l.mil));
+      splitHtml = `<div class="card"><div class="card-h"><h3>Répartition · ${esc(sel.fournisseur)} · ${fdate(sel.date)}</h3><span class="mono muted">${eur(sel.montant)}</span></div><div class="tbl-wrap"><table><thead><tr><th>Lot</th><th>Copropriétaire</th><th class="r">Quote-part</th><th class="r">Part à payer</th></tr></thead><tbody>${b.lots.map((l, i) =>
+        `<tr><td class="mono">${esc(l.numero)}</td><td>${esc(l.proprietaire)}</td><td class="money">${l.mil} ‰</td><td class="money">${eur(parts[i])}</td></tr>`).join("")}</tbody><tfoot><tr><td colspan="2">Total</td><td class="money">${milSum(b)} ‰</td><td class="money">${eur(parts.reduce((a, c) => a + c, 0))}</td></tr></tfoot></table></div></div>`; }
+    return head("Dépenses", "Chaque facture est répartie selon les quotes-parts, au centime près.") + bSwitch(acc, "depB", b) + splitHtml +
+      `<div class="card"><div class="card-h"><h3>Factures · ${esc(short(b))}</h3><span class="mono muted small">Total ${eur(deps.reduce((s, d) => s + d.montant, 0))}</span></div><div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Fournisseur</th><th>Catégorie</th><th class="r">Montant</th></tr></thead><tbody>${deps.map(d =>
+        `<tr class="dep-row${sel && d.id === sel.id ? " on" : ""}" data-act="selDep" data-id="${d.id}" tabindex="0"><td class="mono">${fdate(d.date)}</td><td>${esc(d.fournisseur)}</td><td>${esc(d.categorie)}</td><td class="money">${eur(d.montant)}</td></tr>`).join("") || `<tr><td colspan="4" class="muted">Aucune facture pour cet immeuble.</td></tr>`}</tbody></table></div>
+      <div class="card-b"><form class="inline-form" data-form="addDep">
+        <div class="field"><label for="nd-date">Date</label><input type="date" id="nd-date" name="date" value="${TODAY}"></div>
+        <div class="field"><label for="nd-f">Fournisseur</label><input type="text" id="nd-f" name="fournisseur" placeholder="Nettoyage Moselle Sàrl"></div>
+        <div class="field"><label for="nd-c">Catégorie</label><select id="nd-c" name="categorie">${CATS.map(c => `<option>${c}</option>`).join("")}</select></div>
+        <div class="field"><label for="nd-m">Montant (€)</label><input type="text" inputmode="decimal" id="nd-m" name="montant" placeholder="420,00"></div>
+        <button class="btn btn-accent" type="submit">Enregistrer et répartir</button><p class="form-err" role="alert"></p></form></div></div>`;
+  },
+
+  appels(acc) {
+    if (!acc.buildings.length) return needB("Appels de fonds");
+    const b = pickB(acc, "apB");
+    const aps = [...b.appels].sort((x, y) => y.echeance.localeCompare(x.echeance));
+    const sel = aps.find(a => a.id === ui.apSel) || aps[0];
+    const list = aps.length ? `<div class="ap-list">${aps.map(a => { const paid = a.lines.filter(l => l.paye); const pct = a.total ? Math.round(paid.reduce((s, l) => s + l.montant, 0) / a.total * 100) : 0; const late = a.lines.filter(l => status(a, l).k === "retard").length;
+      return `<button class="ap${sel && a.id === sel.id ? " on" : ""}" data-act="selAp" data-id="${a.id}"><span class="t">${esc(a.periode)}</span><span class="mono">${eur(a.total)}</span><span class="muted small">Échéance ${fdate(a.echeance)} · ${paid.length}/${a.lines.length} payés</span><span class="bar" aria-hidden="true"><i style="width:${pct}%"></i></span>${late ? `<span><span class="pill retard">${late} en retard</span></span>` : ""}</button>`; }).join("")}</div>` : "";
+    const table = sel ? `<div class="card"><div class="card-h"><h3>${esc(sel.periode)} · ${esc(short(b))}</h3><span class="mono muted">${eur(sel.total)}</span></div>${linesTable(sel.lines.map(line => ({ b, a: sel, line, lot: b.lots.find(l => l.id === line.lotId), st: status(sel, line) })), true)}</div>` : "";
+    return head("Appels de fonds", "Le montant est réparti entre les lots selon leur quote-part.") + bSwitch(acc, "apB", b) + list + table +
+      `<div class="card"><div class="card-h"><h3>Nouvel appel de fonds · ${esc(short(b))}</h3></div><div class="card-b"><form class="inline-form" data-form="addAp">
+        <div class="field"><label for="na-p">Période</label><input type="text" id="na-p" name="periode" placeholder="T1 2027"></div>
+        <div class="field"><label for="na-m">Montant total (€)</label><input type="text" inputmode="decimal" id="na-m" name="montant" placeholder="2 400,00"></div>
+        <div class="field"><label for="na-e">Échéance</label><input type="date" id="na-e" name="echeance" value="${nextQuarter()}"></div>
+        <button class="btn btn-accent" type="submit">Créer l'appel</button><p class="form-err" role="alert"></p></form>
+        <p class="muted small" style="margin:12px 0 0">Pour un appel trimestriel, divisez le budget annuel voté en assemblée générale par 4.</p></div></div>`;
+  },
+
+  paiements(acc) {
+    if (!acc.buildings.length) return needB("Paiements");
+    const all = allLines(acc);
+    const g = { retard: all.filter(x => x.st.k === "retard").sort((a, b) => b.st.d - a.st.d), attente: all.filter(x => x.st.k === "attente"), paye: all.filter(x => x.st.k === "paye"), tous: all };
+    const lab = { retard: "En retard", attente: "En attente", paye: "Payés", tous: "Tous" };
+    const items = g[ui.filter] || g.tous;
+    return head("Paiements", "Tous les appels de fonds de vos immeubles, lot par lot.") +
+      `<div class="bswitch" role="tablist" aria-label="Filtre">${Object.keys(lab).map(k => `<button class="chip-btn${ui.filter === k ? " on" : ""}" role="tab" aria-selected="${ui.filter === k}" data-act="filter" data-k="${k}">${lab[k]} · ${g[k].length}</button>`).join("")}</div>
+      <div class="card"><div class="card-h"><h3>${lab[ui.filter]}</h3><span class="mono muted">${eur(sumLines(items))}</span></div>${items.length ? linesTable(items) : `<div class="card-b muted">Rien à afficher.</div>`}</div>`;
+  },
+
+  fonds(acc) {
+    if (!acc.buildings.length) return needB("Fonds de travaux");
+    const b = pickB(acc, "fB");
+    const parts = split(b.fonds.cotisation, b.lots.map(l => l.mil));
+    return head("Fonds de travaux", "Obligatoire pour chaque copropriété depuis la loi du 30 juin 2022.", `<div class="tile"><span>Total, tous immeubles</span><b>${eur(acc.buildings.reduce((s, x) => s + x.fonds.solde, 0))}</b></div>`) + bSwitch(acc, "fB", b) +
+      `<div class="tiles"><div class="tile"><span>Solde · ${esc(short(b))}</span><b>${eur(b.fonds.solde)}</b></div><div class="tile"><span>Cotisation annuelle</span><b>${eur(b.fonds.cotisation)}</b></div><div class="tile"><span>Par trimestre</span><b>${eur(Math.round(b.fonds.cotisation / 4))}</b></div></div>
+      <div class="card"><div class="card-h"><h3>Cotisation par lot</h3></div><div class="tbl-wrap"><table><thead><tr><th>Lot</th><th>Copropriétaire</th><th class="r">Quote-part</th><th class="r">Par an</th></tr></thead><tbody>${b.lots.map((l, i) => `<tr><td class="mono">${esc(l.numero)}</td><td>${esc(l.proprietaire)}</td><td class="money">${l.mil} ‰</td><td class="money">${eur(parts[i])}</td></tr>`).join("") || `<tr><td colspan="4" class="muted">Aucun lot.</td></tr>`}</tbody></table></div>
+      <div class="card-b"><form class="inline-form" data-form="fonds"><div class="field"><label for="nf-c">Cotisation annuelle (€)</label><input type="text" inputmode="decimal" id="nf-c" name="cotisation" value="${eurPlain(b.fonds.cotisation)}"></div><button class="btn" type="submit">Enregistrer</button><p class="form-err" role="alert"></p></form></div>
+      <div class="card-b"><form class="inline-form" data-form="versement"><div class="field"><label for="nf-v">Versement reçu (€)</label><input type="text" inputmode="decimal" id="nf-v" name="versement" placeholder="600,00"></div><button class="btn btn-accent" type="submit">Ajouter au fonds</button><p class="form-err" role="alert"></p></form></div></div>`;
+  },
+
+  cabinet(acc) {
+    const br = acc.brand || {};
+    return head("Mon cabinet", "Ces informations apparaissent dans votre espace et dans vos rappels.") +
+      `<div class="set-grid"><div class="card"><div class="card-b"><form data-form="cabinet">
+        <div class="row2"><div class="field"><label for="c-cab">Nom du cabinet</label><input type="text" id="c-cab" name="cabinet" value="${esc(acc.cabinet)}"></div><div class="field"><label for="c-nom">Personne de contact</label><input type="text" id="c-nom" name="nom" value="${esc(acc.nom)}"></div></div>
+        <div class="field"><label for="c-adr">Adresse du cabinet</label><input type="text" id="c-adr" name="adresse" value="${esc(br.adresse)}"></div>
+        <div class="row2"><div class="field"><label for="c-tel">Téléphone</label><input type="tel" id="c-tel" name="tel" value="${esc(acc.tel)}"></div><div class="field"><label for="c-mail">E-mail de contact</label><input type="email" id="c-mail" name="emailContact" value="${esc(br.emailContact)}"></div></div>
+        <div class="row2"><div class="field"><label for="c-iban">IBAN des copropriétés</label><input type="text" id="c-iban" name="iban" value="${esc(br.iban)}"></div><div class="field"><label for="c-rcs">N° RCS</label><input type="text" id="c-rcs" name="rcs" value="${esc(br.rcs)}"></div></div>
+        <div class="field"><span class="lbl">Couleur</span><div class="swatches">${COLORS.map(c => `<button type="button" class="sw" style="background:${c}" data-act="color" data-c="${c}" aria-pressed="${(br.color || "").toLowerCase() === c.toLowerCase()}" aria-label="Couleur ${c}"></button>`).join("")}<input type="color" name="color" id="c-color" value="${esc(br.color || "#2F5E93")}" aria-label="Autre couleur"></div></div>
+        <div class="field"><label for="c-logo">Logo</label><div class="logo-drop"><span class="prev">${br.logo ? `<img src="${esc(br.logo)}" alt="">` : `<span class="small muted">Aucun</span>`}</span><div><input type="file" id="c-logo" accept="image/*" data-logo="app"><br>${br.logo ? `<button type="button" class="link small" data-act="rmLogo">Retirer le logo</button>` : `<small class="muted">PNG, JPG ou SVG</small>`}</div></div></div>
+        <p class="form-err" role="alert"></p><button class="btn btn-ink" type="submit">Enregistrer</button></form></div></div>
+        <div><p class="lbl" style="margin-bottom:6px">Aperçu</p><div class="mini"><div class="mini-top">${cabMark(acc)}<strong>${esc(acc.cabinet)}</strong></div><div class="mini-nav"><span class="on">Tableau de bord</span><span>Immeubles</span><span>Paiements</span></div></div></div></div>`;
+  },
+
+  abonnement(acc) {
+    const n = lotsOf(acc), billed = Math.max(n, acc.lotsDeclares || 0);
+    const d = new Date(), next = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+    return head("Abonnement", "1,00 € par lot et par mois.") +
+      `<div class="card" style="max-width:640px"><div class="card-b">
+        <div class="sum-line"><span>Cabinet</span><b>${esc(acc.cabinet)}</b></div>
+        <div class="sum-line"><span>Identifiant</span><span class="mono">${esc(acc.email)}</span></div>
+        <div class="sum-line"><span>Lots dans votre espace</span><span class="mono">${n}</span></div>
+        <div class="sum-line"><span>Lots déclarés à l'inscription</span><span class="mono">${acc.lotsDeclares || 0}</span></div>
+        <div class="sum-line"><span>Inscription (payée une fois)</span><span class="mono">${eur(SETUP_FEE)}</span></div>
+        <div class="sum-line"><span>Moyen de paiement</span><span>${esc(acc.paiement || "Carte bancaire")}</span></div>
+        <div class="sum-total"><span>${billed} lots × 1,00 €</span><b>${eur(billed * PRICE_LOT)}<span class="small muted"> / mois</span></b></div>
+        <p class="muted small" style="margin:12px 0 0">Prochaine facture le ${next.toLocaleDateString("fr-LU")}. Le montant suit le nombre de lots gérés.</p></div></div>`;
+  }
+};
+
+function appInner(acc) {
+  const late = allLines(acc).filter(x => x.st.k === "retard").length;
+  return `<aside class="side"><div class="side-cab">${cabMark(acc)}<div><strong>${esc(acc.cabinet)}</strong><small>${lotsOf(acc)} lots</small></div></div>
+    <nav class="side-nav" aria-label="Menu">${TABS.map(([k, t]) => `<button class="side-link${ui.tab === k ? " on" : ""}" data-act="tab" data-k="${k}"${ui.tab === k ? ' aria-current="page"' : ""}><span>${t}</span>${k === "paiements" && late ? `<span class="badge">${late}</span>` : ""}</button>`).join("")}</nav>
+    <div class="side-foot">Propulsé par Orion Syndic</div></aside><section class="work">${(VIEWS[ui.tab] || VIEWS.dashboard)(acc)}</section>`;
+}
+function renderApp() {
+  const acc = currentAccount();
+  if (!acc) { location.hash = "connexion"; return; }
+  const root = $("#app-root");
+  root.setAttribute("style", brandVars(acc.brand && acc.brand.color));
+  root.innerHTML = appInner(acc);
+  renderHeader("app");
+}
+
+/* ---------- aperçus de l'accueil (rendus avec le vrai code de l'application) ---------- */
+function shotHTML(acc, st) {
+  const saved = ui; ui = { ...UI0, ...st };
+  try { return `<div class="shot-inner" inert aria-hidden="true"><div class="app" style="${brandVars(acc.brand.color)}">${appInner(acc)}</div></div>`; }
+  finally { ui = saved; }
+}
+function buildShots() {
+  const A = { ...demoAccount(""), buildings: sampleBuildings() };
+  const B = { ...demoAccount(""), cabinet: "Résidences Moselle Sàrl", brand: { ...A.brand, color: "#2C7A4B" }, buildings: A.buildings };
+  const t = A.buildings[0], assurance = t.depenses.find(d => d.categorie === "Assurance");
+  const map = { dashboard: [A, { tab: "dashboard" }], depenses: [A, { tab: "depenses", depB: t.id, depSel: assurance.id }], paiements: [A, { tab: "paiements", filter: "retard" }], brandA: [A, { tab: "immeubles" }], brandB: [B, { tab: "immeubles" }] };
+  $$(".shot-vp").forEach(vp => { const [acc, st] = map[vp.dataset.shot]; vp.innerHTML = shotHTML(acc, st); });
+  const fit = vp => { const w = vp.clientWidth; if (!w) return; const s = w / 1180; vp.firstElementChild.style.transform = `scale(${s})`; vp.style.height = Math.round(740 * s) + "px"; };
+  if ("ResizeObserver" in window) { const ro = new ResizeObserver(es => es.forEach(e => fit(e.target))); $$(".shot-vp").forEach(vp => ro.observe(vp)); }
+  window.addEventListener("resize", () => $$(".shot-vp").forEach(fit));
+  $$(".shot-vp").forEach(fit);
+}
+$$("[data-tour]").forEach(btn => btn.addEventListener("click", () => {
+  $$("[data-tour]").forEach(b => b.setAttribute("aria-selected", String(b === btn)));
+  $$(".tour-panel").forEach(p => p.hidden = p.id !== "tp-" + btn.dataset.tour);
+}));
+
+/* ---------- en-tête et navigation ---------- */
+function renderHeader(view) {
+  const nav = $("#top-nav"), acc = currentAccount();
+  if (view === "app" && acc) { nav.innerHTML = `<span class="top-cab" style="${brandVars(acc.brand && acc.brand.color)}">${cabMark(acc, "sm")}<span>${esc(acc.cabinet)}</span></span><button class="btn btn-sm" type="button" data-logout>Déconnexion</button>`; return; }
+  nav.innerHTML = `<nav class="top-links" aria-label="Sections"><a href="#apercu">Aperçu</a><a href="#fonctions">Fonctions</a><a href="#prix">Prix</a><a href="#faq">FAQ</a></nav>
+    <div class="top-actions">${acc ? `<a class="btn btn-sm" href="#app">Mon espace</a>` : `<a class="btn btn-sm" href="#connexion">Se connecter</a>`}<a class="btn btn-sm btn-ink" href="#inscription">Créer mon espace</a></div>`;
+}
+const SECTIONS = ["accueil", "excel", "apercu", "fonctions", "prix", "fonctionnement", "faq"];
+function show(view) {
+  document.body.dataset.view = view;
+  $("#v-accueil").hidden = view !== "accueil";
+  $("#v-inscription").hidden = view !== "inscription";
+  $("#v-connexion").hidden = view !== "connexion";
+  $("#v-app").hidden = view !== "app";
+}
+function route() {
+  const h = location.hash.slice(1);
+  if (h === "inscription") { show("inscription"); if (reg.step === 4) reg = { step: 1, data: null }; renderReg(); renderHeader("inscription"); window.scrollTo(0, 0); }
+  else if (h === "connexion") { show("connexion"); renderHeader("connexion"); window.scrollTo(0, 0); }
+  else if (h === "app") { if (!currentAccount()) { location.hash = "connexion"; return; } show("app"); renderApp(); window.scrollTo(0, 0); }
+  else { show("accueil"); renderHeader("accueil"); if (SECTIONS.includes(h) && h !== "accueil") { const el = document.getElementById(h); if (el) el.scrollIntoView(); } else window.scrollTo(0, 0); }
+}
+function openApp(email) { store.set("os_session", email); ui = { ...UI0 }; if (location.hash === "#app") route(); else location.hash = "app"; }
+document.addEventListener("click", e => {
+  if (e.target.closest("[data-demo]")) openApp(DEMO_EMAIL);
+  if (e.target.closest("[data-logout]")) { store.del("os_session"); location.hash = "accueil"; }
+});
+
+/* ---------- toast + rappel ---------- */
+let toastT;
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2400); }
+function openReminder(acc, aId, lotId) {
+  const { b, a, line } = findLine(acc, aId, lotId); if (!line) return;
+  const lot = b.lots.find(l => l.id === lotId), br = acc.brand || {};
+  const ref = `${b.nom} · lot ${lot ? lot.numero : ""} · ${a.periode}`;
+  const sig = [acc.nom, acc.cabinet, br.adresse, [acc.tel, br.emailContact].filter(Boolean).join(" · ")].filter(Boolean).join("\n");
+  $("#rem-text").value = `Bonjour ${lot ? lot.proprietaire : ""},\n\nSauf erreur de notre part, l'appel de fonds « ${a.periode} » de la ${b.nom} (lot ${lot ? lot.numero : ""}), d'un montant de ${eur(line.montant)}, était à régler le ${fdate(a.echeance)}.\n\n${br.iban ? `Merci d'effectuer le virement sur le compte ${br.iban} au nom de ${acc.cabinet}, avec la référence « ${ref} ».` : "Merci d'effectuer le virement dans les meilleurs délais."}\n\nSi le paiement a été fait entre-temps, merci de ne pas tenir compte de ce message.\n\nCordialement,\n${sig}`;
+  $("#modal").hidden = false; $("#rem-text").focus();
+}
+const closeModal = () => { $("#modal").hidden = true; };
+$("#rem-close").addEventListener("click", closeModal);
+$("#modal").addEventListener("click", e => { if (e.target.id === "modal") closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#modal").hidden) closeModal(); });
+$("#rem-copy").addEventListener("click", () => {
+  const t = $("#rem-text"), fallback = () => { t.select(); toast("Sélectionnez le texte puis copiez-le"); };
+  try { navigator.clipboard.writeText(t.value).then(() => toast("Texte copié"), fallback); } catch (e) { fallback(); }
+});
+
+/* ---------- logo : lecture et réduction ---------- */
+function readLogo(file) {
+  return new Promise((res, rej) => {
+    if (!file) return res(null);
+    if (!/^image\//.test(file.type)) return rej(new Error("type"));
+    const fr = new FileReader();
+    fr.onerror = () => rej(new Error("read"));
+    fr.onload = () => { const img = new Image(); img.onerror = () => rej(new Error("img"));
+      img.onload = () => { const max = 320, w = img.naturalWidth || max, h = img.naturalHeight || max, s = Math.min(1, max / Math.max(w, h));
+        const c = document.createElement("canvas"); c.width = Math.max(1, Math.round(w * s)); c.height = Math.max(1, Math.round(h * s));
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        try { res(c.toDataURL("image/png")); } catch (e) { res(fr.result); } };
+      img.src = fr.result; };
+    fr.readAsDataURL(file);
+  });
+}
+
+/* ---------- actions de l'application ---------- */
+const root = $("#app-root");
+root.addEventListener("click", e => {
+  const t = e.target.closest("[data-act]"); if (!t || !root.contains(t)) return;
+  const acc = currentAccount(); if (!acc) return;
+  switch (t.dataset.act) {
+    case "tab": ui.tab = t.dataset.k; ui.bId = null; ui.addB = false; ui.delB = false; break;
+    case "pickB": ui[t.dataset.key] = t.dataset.id; ui.depSel = null; ui.apSel = null; break;
+    case "openB": ui.bId = t.dataset.id; ui.delB = false; break;
+    case "backB": ui.bId = null; ui.delB = false; break;
+    case "toggleAddB": ui.addB = !ui.addB; break;
+    case "goAddB": ui.tab = "immeubles"; ui.bId = null; ui.addB = true; break;
+    case "delLot": { const b = findB(acc, ui.bId); if (b) { b.lots = b.lots.filter(l => l.id !== t.dataset.id); saveAccounts(); toast("Lot supprimé"); } break; }
+    case "delB": if (!ui.delB) ui.delB = true; else { acc.buildings = acc.buildings.filter(b => b.id !== ui.bId); ui.bId = null; ui.delB = false; saveAccounts(); toast("Immeuble supprimé"); } break;
+    case "selDep": ui.depSel = t.dataset.id; break;
+    case "selAp": ui.apSel = t.dataset.id; break;
+    case "pay": { const { line } = findLine(acc, t.dataset.a, t.dataset.l); if (line) { line.paye = !line.paye; saveAccounts(); toast(line.paye ? "Paiement enregistré" : "Paiement remis en attente"); } break; }
+    case "remind": openReminder(acc, t.dataset.a, t.dataset.l); return;
+    case "filter": ui.filter = t.dataset.k; break;
+    case "loadSample": acc.buildings = sampleBuildings(); saveAccounts(); toast("Exemple chargé : 3 résidences"); break;
+    case "color": acc.brand = { ...(acc.brand || {}), color: t.dataset.c }; saveAccounts(); break;
+    case "rmLogo": acc.brand = { ...(acc.brand || {}), logo: null }; saveAccounts(); toast("Logo retiré"); break;
+    default: return;
+  }
+  renderApp();
+});
+root.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.matches("tr[data-act]")) { e.preventDefault(); e.target.click(); } });
+root.addEventListener("change", async e => {
+  const acc = currentAccount(); if (!acc) return;
+  if (e.target.matches("[data-logo='app']")) {
+    try { const logo = await readLogo(e.target.files[0]); if (logo) { acc.brand = { ...(acc.brand || {}), logo }; saveAccounts(); toast("Logo enregistré"); renderApp(); } }
+    catch (err) { toast("Ce fichier n'est pas une image lisible. Essayez un PNG ou un JPG."); }
+  } else if (e.target.id === "c-color") { acc.brand = { ...(acc.brand || {}), color: e.target.value }; saveAccounts(); renderApp(); }
+});
+root.addEventListener("submit", e => {
+  e.preventDefault();
+  const f = e.target, acc = currentAccount(); if (!acc) return;
+  const fd = new FormData(f), err = m => { const p = f.querySelector(".form-err"); if (p) p.textContent = m; };
+  const v = k => String(fd.get(k) || "").trim();
+  switch (f.dataset.form) {
+    case "addB": { if (!v("nom")) return err("Indiquez le nom de la résidence.");
+      const b = { id: uid(), nom: v("nom"), adresse: v("adresse"), lots: [], depenses: [], appels: [], fonds: { solde: 0, cotisation: 0 } };
+      acc.buildings.push(b); ui.addB = false; ui.bId = b.id; toast("Immeuble créé. Ajoutez maintenant ses lots."); break; }
+    case "addLot": { const b = findB(acc, ui.bId), mil = parseInt(v("mil"), 10);
+      if (!v("proprietaire")) return err("Indiquez le nom du copropriétaire.");
+      if (!(mil > 0 && mil <= 1000)) return err("Indiquez une quote-part entre 1 et 1000 ‰.");
+      b.lots.push({ id: uid(), numero: v("numero") || pad(b.lots.length + 1), type: v("type") || "Appartement", proprietaire: v("proprietaire"), mil }); toast("Lot ajouté"); break; }
+    case "addDep": { const b = findB(acc, ui.depB), m = parseAmount(v("montant"));
+      if (!(m > 0)) return err("Indiquez un montant valide, par exemple 420,00.");
+      if (!b.lots.length) return err("Ajoutez d'abord les lots de cet immeuble.");
+      const d = { id: uid(), date: v("date") || TODAY, fournisseur: v("fournisseur") || "Sans nom", categorie: v("categorie"), montant: m };
+      b.depenses.push(d); ui.depSel = d.id; toast(`Facture répartie entre ${b.lots.length} lots`); break; }
+    case "addAp": { const b = findB(acc, ui.apB), m = parseAmount(v("montant"));
+      if (!v("periode")) return err("Indiquez la période, par exemple T1 2027.");
+      if (!(m > 0)) return err("Indiquez un montant valide, par exemple 2 400,00.");
+      if (!b.lots.length) return err("Ajoutez d'abord les lots de cet immeuble.");
+      const parts = split(m, b.lots.map(l => l.mil));
+      const a = { id: uid(), periode: v("periode"), total: m, echeance: v("echeance") || nextQuarter(), lines: b.lots.map((l, i) => ({ lotId: l.id, montant: parts[i], paye: false })) };
+      b.appels.push(a); ui.apSel = a.id; toast("Appel de fonds créé"); break; }
+    case "fonds": { const b = findB(acc, ui.fB), c = parseAmount(v("cotisation"));
+      if (!(c >= 0)) return err("Indiquez un montant valide."); b.fonds.cotisation = c; toast("Cotisation enregistrée"); break; }
+    case "versement": { const b = findB(acc, ui.fB), c = parseAmount(v("versement"));
+      if (!(c > 0)) return err("Indiquez un montant valide, par exemple 600,00."); b.fonds.solde += c; toast("Versement ajouté au fonds"); break; }
+    case "cabinet": { if (!v("cabinet")) return err("Le nom du cabinet est obligatoire.");
+      acc.cabinet = v("cabinet"); acc.nom = v("nom"); acc.tel = v("tel");
+      acc.brand = { ...(acc.brand || {}), adresse: v("adresse"), emailContact: v("emailContact"), iban: v("iban"), rcs: v("rcs"), color: v("color") || (acc.brand || {}).color };
+      toast("Informations enregistrées"); break; }
+    default: return;
+  }
+  saveAccounts(); renderApp();
+});
+
+/* ---------- inscription ---------- */
+let reg = { step: 1, data: null };
+let pendingLots = 180;
+const regDefaults = () => ({ cabinet: "", nom: "", tel: "", email: "", pw: "", lots: pendingLots, color: COLORS[0], logo: null, adresse: "", emailContact: "", iban: "", rcs: "", paiement: "Carte bancaire" });
+function renderSum() {
+  const d = reg.data || regDefaults(), n = Math.max(1, parseInt(d.lots, 10) || 1);
+  $("#reg-sum").innerHTML = `<h3>Votre abonnement</h3>
+    <div class="sum-line"><span>Lots principaux</span><span class="mono">${n}</span></div>
+    <div class="sum-line"><span>Abonnement mensuel</span><span class="mono">${eur(n * PRICE_LOT)}</span></div>
+    <div class="sum-line"><span>Inscription (une seule fois)</span><span class="mono">${eur(SETUP_FEE)}</span></div>
+    <div class="sum-total"><span>À payer aujourd'hui</span><b>${eur(SETUP_FEE + n * PRICE_LOT)}</b></div>
+    <p class="muted small" style="margin:10px 0 0">Ensuite ${eur(n * PRICE_LOT)} par mois.</p>`;
+}
+function previewMini(d) {
+  const fake = { cabinet: d.cabinet || "Votre cabinet", brand: { color: d.color, logo: d.logo } };
+  return `<div class="mini" style="${brandVars(d.color)}"><div class="mini-top">${cabMark(fake)}<strong>${esc(fake.cabinet)}</strong></div><div class="mini-nav"><span class="on">Tableau de bord</span><span>Immeubles</span><span>Paiements</span></div></div>`;
+}
+function renderReg() {
+  if (!reg.data) reg.data = regDefaults();
+  const d = reg.data, st = reg.step, box = $("#reg-main");
+  $("#reg-stepper").innerHTML = ["Votre cabinet", "Votre image", "Paiement", "Accès"].map((t, i) => `<span class="${i + 1 === st ? "on" : (i + 1 < st ? "done" : "")}">${i + 1} · ${t}</span>`).join("");
+  if (st === 1) {
+    box.innerHTML = `<form id="reg1" novalidate>
+      <div class="field"><label for="r-cab">Nom du cabinet de syndic</label><input type="text" id="r-cab" name="cabinet" autocomplete="organization" value="${esc(d.cabinet)}" placeholder="Gérance Lux Sàrl"></div>
+      <div class="row2"><div class="field"><label for="r-nom">Votre nom et prénom</label><input type="text" id="r-nom" name="nom" autocomplete="name" value="${esc(d.nom)}"></div>
+      <div class="field"><label for="r-tel">Téléphone</label><input type="tel" id="r-tel" name="tel" autocomplete="tel" value="${esc(d.tel)}"></div></div>
+      <div class="field"><label for="r-mail">E-mail (sera votre identifiant)</label><input type="email" id="r-mail" name="email" autocomplete="email" value="${esc(d.email)}"></div>
+      <div class="field"><label for="r-pw">Mot de passe</label><input type="password" id="r-pw" name="pw" autocomplete="new-password"><small>8 caractères minimum</small></div>
+      <div class="field"><label for="r-lots">Nombre de lots principaux gérés</label><input type="number" id="r-lots" name="lots" min="1" step="1" value="${esc(d.lots)}"><small>Appartements, commerces et bureaux. Caves et parkings ne comptent pas.</small></div>
+      <p class="form-err" role="alert"></p>
+      <button class="btn btn-accent btn-lg" type="submit">Continuer</button>
+      <p class="small muted" style="margin-top:16px">Déjà client ? <a href="#connexion">Se connecter</a></p></form>`;
+    $("#r-lots").addEventListener("input", e => { d.lots = e.target.value; renderSum(); });
+    $("#reg1").addEventListener("submit", async e => {
+      e.preventDefault();
+      const f = e.target, err = m => { f.querySelector(".form-err").textContent = m; };
+      const val = k => f.elements[k].value.trim();
+      const email = val("email").toLowerCase(), pw = f.elements.pw.value, lots = parseInt(val("lots"), 10);
+      if (!val("cabinet")) return err("Indiquez le nom de votre cabinet.");
+      if (!val("nom")) return err("Indiquez votre nom et prénom.");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return err("Indiquez une adresse e-mail valide.");
+      if (accounts[email]) return err("Un compte existe déjà avec cet e-mail. Connectez-vous.");
+      if (pw.length < 8 && !d.pwHash) return err("Choisissez un mot de passe d'au moins 8 caractères.");
+      if (!(lots >= 1)) return err("Indiquez le nombre de lots (au moins 1).");
+      Object.assign(d, { cabinet: val("cabinet"), nom: val("nom"), tel: val("tel"), email, lots });
+      if (pw) d.pwHash = await sha(pw);
+      reg.step = 2; renderReg(); window.scrollTo(0, 0);
+    });
+  } else if (st === 2) {
+    box.innerHTML = `<form id="reg2" novalidate>
+      <p class="muted" style="margin-top:-4px">Votre espace reprendra votre logo et votre couleur. Vous pourrez tout changer plus tard dans « Mon cabinet ».</p>
+      <div class="field"><label for="r-logo">Logo du cabinet</label><div class="logo-drop"><span class="prev" id="r-logo-prev">${d.logo ? `<img src="${esc(d.logo)}" alt="">` : `<span class="small muted">Aucun</span>`}</span><div><input type="file" id="r-logo" accept="image/*"><br><small class="muted">PNG, JPG ou SVG. Sans logo, vos initiales sont utilisées.</small></div></div></div>
+      <div class="field"><span class="lbl">Couleur principale</span><div class="swatches" id="r-sw">${COLORS.map(c => `<button type="button" class="sw" style="background:${c}" data-c="${c}" aria-pressed="${d.color === c}" aria-label="Couleur ${c}"></button>`).join("")}<input type="color" id="r-color" value="${esc(d.color)}" aria-label="Autre couleur"></div></div>
+      <div class="field"><label for="r-adr">Adresse du cabinet</label><input type="text" id="r-adr" name="adresse" value="${esc(d.adresse)}" placeholder="3, rue de la Gare · L-8001 Strassen"></div>
+      <div class="row2"><div class="field"><label for="r-emc">E-mail de contact pour les copropriétaires</label><input type="email" id="r-emc" name="emailContact" value="${esc(d.emailContact || d.email)}"></div>
+      <div class="field"><label for="r-iban">IBAN pour les paiements</label><input type="text" id="r-iban" name="iban" value="${esc(d.iban)}" placeholder="LU.."><small>Repris dans les rappels de paiement</small></div></div>
+      <div class="field"><label for="r-rcs">N° RCS (facultatif)</label><input type="text" id="r-rcs" name="rcs" value="${esc(d.rcs)}" placeholder="B123456"></div>
+      <p class="lbl" style="margin:4px 0 0">Aperçu de votre espace</p><div id="r-prev">${previewMini(d)}</div>
+      <p class="form-err" role="alert"></p>
+      <div class="hero-cta"><button class="btn btn-accent btn-lg" type="submit">Continuer vers le paiement</button><button class="btn btn-lg" type="button" id="r-back">Retour</button></div></form>`;
+    const refresh = () => { $("#r-prev").innerHTML = previewMini(d); $$("#r-sw .sw").forEach(s => s.setAttribute("aria-pressed", String(s.dataset.c.toLowerCase() === d.color.toLowerCase()))); };
+    $("#r-sw").addEventListener("click", e => { const s = e.target.closest(".sw"); if (s) { d.color = s.dataset.c; $("#r-color").value = d.color; refresh(); } });
+    $("#r-color").addEventListener("input", e => { d.color = e.target.value; refresh(); });
+    $("#r-logo").addEventListener("change", async e => {
+      try { const logo = await readLogo(e.target.files[0]); if (logo) { d.logo = logo; $("#r-logo-prev").innerHTML = `<img src="${esc(logo)}" alt="">`; refresh(); } }
+      catch (er) { $("#reg2 .form-err").textContent = "Ce fichier n'est pas une image lisible. Essayez un PNG ou un JPG."; }
+    });
+    $("#r-back").addEventListener("click", () => { reg.step = 1; renderReg(); });
+    $("#reg2").addEventListener("submit", e => {
+      e.preventDefault(); const f = e.target;
+      Object.assign(d, { adresse: f.elements.adresse.value.trim(), emailContact: f.elements.emailContact.value.trim(), iban: f.elements.iban.value.trim().toUpperCase(), rcs: f.elements.rcs.value.trim() });
+      reg.step = 3; renderReg(); window.scrollTo(0, 0);
+    });
+  } else if (st === 3) {
+    const n = d.lots, total = SETUP_FEE + n * PRICE_LOT;
+    box.innerHTML = `<div class="mini-top" style="border:1px solid var(--line);border-radius:10px;margin-bottom:16px;${brandVars(d.color)}">${cabMark({ cabinet: d.cabinet, brand: { logo: d.logo } })}<div><strong>${esc(d.cabinet)}</strong><br><span class="small muted">${esc(d.email)}</span></div></div>
+      <div class="sum-line"><span>Inscription (une seule fois)</span><span class="mono">${eur(SETUP_FEE)}</span></div>
+      <div class="sum-line"><span>Premier mois · ${n} lots × 1,00 €</span><span class="mono">${eur(n * PRICE_LOT)}</span></div>
+      <div class="sum-total"><span>Total à payer</span><b>${eur(total)}</b></div>
+      <fieldset><legend>Moyen de paiement</legend>
+        <label class="radio"><input type="radio" name="pm" value="Carte bancaire" ${d.paiement === "Carte bancaire" ? "checked" : ""}> Carte bancaire</label>
+        <label class="radio"><input type="radio" name="pm" value="Domiciliation SEPA" ${d.paiement === "Domiciliation SEPA" ? "checked" : ""}> Domiciliation SEPA</label></fieldset>
+      <label class="check"><input type="checkbox" id="r-cgv"> J'accepte les conditions générales de vente.</label>
+      <p class="form-err" role="alert" id="pay-err"></p>
+      <div class="hero-cta"><button class="btn btn-accent btn-lg" type="button" id="pay-btn">Payer ${eur(total)} et créer mon espace</button><button class="btn btn-lg" type="button" id="r-back">Retour</button></div>
+      <p class="demo-note">Démo : aucun paiement n'est effectué. Dans la version finale, ce bouton ouvre la page de paiement sécurisée Stripe, puis crée le compte.</p>`;
+    $("#r-back").addEventListener("click", () => { reg.step = 2; renderReg(); });
+    $("#pay-btn").addEventListener("click", e => {
+      if (!$("#r-cgv").checked) { $("#pay-err").textContent = "Cochez la case des conditions générales pour continuer."; return; }
+      if (accounts[d.email]) { $("#pay-err").textContent = "Un compte existe déjà avec cet e-mail."; return; }
+      d.paiement = (document.querySelector("input[name=pm]:checked") || {}).value || "Carte bancaire";
+      const btn = e.currentTarget; btn.disabled = true; btn.textContent = "Paiement en cours…";
+      setTimeout(() => {
+        accounts[d.email] = { cabinet: d.cabinet, nom: d.nom, email: d.email, tel: d.tel, pw: d.pwHash, lotsDeclares: d.lots, paiement: d.paiement, creeLe: TODAY,
+          brand: { color: d.color, logo: d.logo, adresse: d.adresse, emailContact: d.emailContact, iban: d.iban, rcs: d.rcs }, buildings: [] };
+        saveAccounts(); store.set("os_session", d.email); reg.step = 4; renderReg(); renderHeader("inscription");
+      }, 1300);
+    });
+  } else {
+    box.innerHTML = `<div style="${brandVars(d.color)}"><div class="mini-top" style="border:1px solid var(--line);border-radius:10px;margin-bottom:18px">${cabMark({ cabinet: d.cabinet, brand: { logo: d.logo } })}<strong>${esc(d.cabinet)}</strong></div></div>
+      <h2 style="font-size:2.2rem;font-weight:800;margin-bottom:10px">Votre espace est prêt</h2>
+      <p class="muted">Paiement reçu. Vous pouvez vous connecter à tout moment avec votre e-mail <b class="mono">${esc(d.email)}</b> et votre mot de passe.</p>
+      <button class="btn btn-accent btn-lg" type="button" id="go-app">Ouvrir mon espace</button>`;
+    $("#go-app").addEventListener("click", () => openApp(d.email));
+  }
+  renderSum();
+}
+
+/* ---------- connexion ---------- */
+$("#login-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const em = $("#l-mail").value.trim().toLowerCase(), pw = $("#l-pw").value, acc = accounts[em];
+  if (!acc || acc.pw !== await sha(pw)) { $("#l-err").textContent = "E-mail ou mot de passe incorrect."; return; }
+  $("#l-err").textContent = ""; openApp(em);
+});
+
+/* ---------- accueil : calcul en direct et prix ---------- */
+const HERO = [["07",140],["08",185],["05",95],["06",110],["03",140],["04",125],["01",95],["02",110]];
+function heroUpdate(flash) {
+  const c = parseAmount($("#hero-amount").value), ok = c >= 0;
+  const parts = split(ok ? c : 0, HERO.map(x => x[1]));
+  HERO.forEach(([n], i) => { const el = $("#part-" + n); el.textContent = eur(parts[i]); if (flash) { el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); } });
+  $("#hero-total").textContent = eur(parts.reduce((a, b) => a + b, 0));
+  $("#hero-amount").setAttribute("aria-invalid", String(!ok));
+}
+$("#hero-amount").addEventListener("input", () => heroUpdate(true));
+$("#hero-amount").addEventListener("blur", () => { const c = parseAmount($("#hero-amount").value); if (c >= 0) $("#hero-amount").value = eurPlain(c); });
+function calcUpdate(v, from) {
+  v = Math.max(1, Math.min(5000, Math.round(+v) || 1));
+  if (from !== "num") $("#calc-num").value = v;
+  if (from !== "range") $("#calc-range").value = Math.min(v, 1000);
+  $("#calc-month").textContent = eur(v * PRICE_LOT);
+  $("#calc-first").textContent = eur(SETUP_FEE + v * PRICE_LOT);
+  $("#calc-year").textContent = eur(v * PRICE_LOT * 12);
+  const imm = Math.max(1, Math.round(v / 9));
+  $("#calc-hint").textContent = `soit environ ${imm} immeuble${imm > 1 ? "s" : ""} de 9 logements`;
+  $$("[data-preset]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.preset === v)));
+  $("#calc-cta").textContent = `Créer mon espace avec ${v} lot${v > 1 ? "s" : ""}`;
+  pendingLots = v;
+  if (reg.step === 1 && reg.data) reg.data.lots = v;
+}
+$("#calc-num").addEventListener("input", e => calcUpdate(e.target.value, "num"));
+$("#calc-range").addEventListener("input", e => calcUpdate(e.target.value, "range"));
+$$("[data-preset]").forEach(b => b.addEventListener("click", () => calcUpdate(b.dataset.preset)));
+
+/* ---------- démarrage ---------- */
+(async function init() {
+  accounts = loadAccounts();
+  if (!accounts[DEMO_EMAIL]) { accounts[DEMO_EMAIL] = demoAccount(await sha(DEMO_PW)); saveAccounts(); }
+  heroUpdate(false); calcUpdate(180); buildShots(); route();
+  window.addEventListener("hashchange", route);
+})();
+</script>
+</body>
+</html>
