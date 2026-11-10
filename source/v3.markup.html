@@ -393,6 +393,112 @@ tfoot td{font-weight:700;border-top:1px solid var(--ink);border-bottom:0;color:v
 .app.m .tiles{grid-template-columns:1fr 1fr}
 .app.m .tile b{font-size:1.15rem}
 
+
+/* ---------- téléphone ---------- */
+.menu-btn{display:none;width:42px;height:42px;border-radius:12px;border:1px solid var(--line-2);background:var(--surface);cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:0;margin-left:8px}
+.menu-btn span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;transition:transform .2s,opacity .2s}
+.menu-btn[aria-expanded="true"] span:first-child{transform:translateY(3.5px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
+.m-menu{position:fixed;left:0;right:0;top:68px;bottom:0;z-index:39;background:var(--bg);padding:8px 20px 28px;overflow:auto;display:flex;flex-direction:column}
+.m-menu a:not(.btn){display:block;padding:18px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);font-size:1.2rem;font-weight:600}
+.m-menu .btn{margin-top:24px}
+body.menu-open{overflow:hidden}
+body[data-view="app"] .menu-btn{display:none!important}
+.tour-m{display:none}
+@media (max-width:920px){.menu-btn{display:inline-flex}}
+@media (max-width:980px){
+  .tour{display:none}
+  .tour-m{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -32px;padding:0 32px 10px;scrollbar-width:none}
+  .tour-m::-webkit-scrollbar{display:none}
+  .tm-item{flex:0 0 min(84%,380px);scroll-snap-align:start;background:var(--mist);border-radius:22px;padding:24px 22px 26px;display:flex;flex-direction:column}
+  .tm-item h3{font-size:1.3rem;letter-spacing:-.02em;margin-bottom:8px}
+  .tm-item p{color:var(--muted);font-size:.98rem;margin:0 0 20px;flex:1}
+  .tm-item .phone{position:relative;right:auto;bottom:auto;width:74%;max-width:250px;margin:0 auto 18px;border-radius:34px;padding:8px}
+  .tm-item .phone .shot-vp{border-radius:27px}
+  .tm-item .phone::before{top:15px;height:16px}
+  .swipe-hint{display:block;margin:6px 0 0;color:var(--muted);font-size:.88rem}
+}
+.swipe-hint{display:none}
+@media (max-width:640px){
+  .wrap{padding:0 20px}
+  .tour-m{margin:0 -20px;padding:0 20px 10px}
+  .top-actions{display:none}
+  .brand .logo{height:26px}
+  section.block{padding:76px 0}
+  .sec-head{margin-bottom:32px}
+  .sec-head p{font-size:1.02rem}
+  .hero{padding-top:48px}
+  .hero h1{font-size:2.65rem;line-height:1.02}
+  .hero-side p{font-size:1.04rem;margin-bottom:22px}
+  .hero-side .cta-row .btn{flex:1 1 100%}
+  .hero-price{font-size:.88rem;margin-top:14px}
+  .devices{max-width:270px;margin:44px auto -96px}
+  .laptop{display:none}
+  .phone{position:relative;right:auto;bottom:auto;width:100%;border-radius:44px;padding:10px}
+  .phone .shot-vp{border-radius:35px}
+  .phone::before{top:20px;height:24px}
+  .trust{padding:136px 0 44px}
+  .trust-grid{gap:18px}
+  .try{gap:28px}
+  .coupe{padding:18px 14px 14px;border-radius:16px}
+  .coupe-head{margin-bottom:16px}
+  .amount,.amount-in{width:100%}
+  .amount-in input{width:100%}
+  .facade{margin:0 6px;padding:8px;gap:8px}
+  .roof{margin:0 2px;height:38px}
+  .floor{grid-template-columns:30px 1fr 1fr;gap:8px}
+  .apt{padding:7px 9px}
+  .apt .part{font-size:.98rem}
+  .cmp thead{display:none}
+  .cmp,.cmp tbody,.cmp tr,.cmp th,.cmp td{display:block;width:100%}
+  .cmp tr{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+  .cmp tbody th{padding:16px 16px 6px;border:0;width:auto;font-size:1.05rem}
+  .cmp td{padding:8px 16px;border:0;font-size:.95rem}
+  .cmp td::before{content:attr(data-label);display:block;font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:2px}
+  .cmp td.us{margin-top:4px;padding:12px 16px 14px;border-radius:0}
+  .cmp td.us::before{color:var(--blue)}
+  .cmp tbody tr:last-child .us{border-radius:0}
+  .price{gap:32px}
+  .price-list li{font-size:.95rem}
+  .ex-table th,.ex-table td{padding:10px 8px}
+  .faq summary{font-size:1rem;padding:18px 0}
+  .closing{padding:72px 0}
+  .closing .cta-row .btn{flex:1 1 100%}
+  .auth{padding:28px 0 64px}
+  .auth-grid .sum{order:-1}
+  .modal{align-items:end;padding:0}
+  .modal-box{border-radius:22px 22px 0 0;max-height:92vh;overflow:auto;padding:22px 18px}
+  .modal-acts .btn{flex:1}
+  .top-cab{display:none}
+}
+/* application sur téléphone */
+.app.m{grid-template-columns:minmax(0,1fr)}
+.app.m .bswitch{flex-wrap:nowrap;overflow-x:auto;margin:0 -14px 16px;padding:0 14px 4px;scrollbar-width:none}
+.app.m .chip-btn{white-space:nowrap}
+.app.m th,.app.m td{padding:10px}
+.app.m .w-head{margin-bottom:16px}
+.app.m .w-head p{font-size:.9rem}
+.app.m .card-h{padding:12px 14px}
+.app.m .card-b{padding:14px}
+.app.m .ap-list{grid-template-columns:1fr}
+.app.m .inline-form{grid-template-columns:1fr 1fr}
+.app.m .inline-form .btn{grid-column:1/-1;width:100%}
+.app.m table.lines thead{display:none}
+.app.m table.lines,.app.m table.lines tbody{display:block}
+.app.m table.lines tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.app.m table.lines tbody tr:last-child{border-bottom:0}
+.app.m table.lines td{display:block;padding:0;border:0}
+.app.m table.lines td:nth-child(1){grid-column:1;grid-row:1;font-weight:600;color:var(--ink)}
+.app.m table.lines td:nth-child(5){grid-column:2;grid-row:1}
+.app.m table.lines td:nth-child(2){grid-column:1;grid-row:2;color:var(--muted);font-size:.85rem}
+.app.m table.lines td:nth-child(6){grid-column:2;grid-row:2;text-align:right}
+.app.m table.lines td:nth-child(3){grid-column:1;grid-row:3;color:var(--muted);font-size:.85rem}
+.app.m table.lines td:nth-child(3)::before{content:"Appel "}
+.app.m table.lines td:nth-child(4){grid-column:2;grid-row:3;text-align:right;color:var(--muted);font-size:.85rem}
+.app.m table.lines td:nth-child(7){grid-column:1/-1;grid-row:4;margin-top:10px}
+.app.m table.lines .acts{justify-content:stretch;flex-wrap:nowrap}
+.app.m table.lines .acts .btn{flex:1;padding:10px}
+
 .modal{position:fixed;inset:0;background:rgba(11,18,32,.55);display:grid;place-items:center;padding:16px;z-index:50}
 .modal-box{background:var(--surface);border-radius:18px;max-width:620px;width:100%;padding:26px;border:1px solid var(--line);box-shadow:var(--lift)}
 .modal-box h3{font-size:1.35rem;margin-bottom:6px}
@@ -403,7 +509,8 @@ tfoot td{font-weight:700;border-top:1px solid var(--ink);border-bottom:0;color:v
 </style>
 </head>
 <body data-view="accueil">
-<header class="top"><div class="wrap top-in"><a class="brand" href="#accueil" aria-label="Orion Syndic, accueil">{{LOGO}}</a><span class="demo-tag" title="Aucun paiement réel, les données restent dans ce navigateur">Démo</span><div id="top-nav"></div></div></header>
+<header class="top"><div class="wrap top-in"><a class="brand" href="#accueil" aria-label="Orion Syndic, accueil">{{LOGO}}</a><span class="demo-tag" title="Aucun paiement réel, les données restent dans ce navigateur">Démo</span><div id="top-nav"></div><button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="m-menu"><span></span><span></span></button></div></header>
+<nav class="m-menu" id="m-menu" aria-label="Menu" hidden></nav>
 
 <main>
 <div id="v-accueil">
@@ -452,6 +559,8 @@ tfoot td{font-weight:700;border-top:1px solid var(--ink);border-bottom:0;color:v
           <div class="tour-panel stage" role="tabpanel" id="tp-5" aria-labelledby="tt-5" hidden><div class="shot-frame"><div class="shot-vp" data-shot="cabinet" data-solo="1" data-w="1040" data-h="680"></div></div></div>
         </div>
       </div>
+      <div class="tour-m" aria-label="Fonctions"><article class="tm-item"><div class="phone"><div class="shot-vp" data-shot="m-depenses" data-w="390" data-h="740"></div></div><h3>Répartition des factures</h3><p>Saisissez le fournisseur et le montant. La part de chaque lot est calculée selon ses millièmes, au centime près.</p><button class="arrow-link" type="button" data-demo data-demo-tab="depenses">Ouvrir dans la démo</button></article><article class="tm-item"><div class="phone"><div class="shot-vp" data-shot="m-appels" data-w="390" data-h="740"></div></div><h3>Appels de fonds</h3><p>Indiquez le montant et l'échéance. Chaque copropriétaire reçoit sa part, et vous voyez qui a payé.</p><button class="arrow-link" type="button" data-demo data-demo-tab="appels">Ouvrir dans la démo</button></article><article class="tm-item"><div class="phone"><div class="shot-vp" data-shot="m-paiements" data-w="390" data-h="740"></div></div><h3>Relances</h3><p>Rappel amiable, second rappel, mise en demeure : la bonne lettre est prête, avec votre IBAN.</p><button class="arrow-link" type="button" data-demo data-demo-tab="paiements">Ouvrir dans la démo</button></article><article class="tm-item"><div class="phone"><div class="shot-vp" data-shot="m-fonds" data-w="390" data-h="740"></div></div><h3>Fonds de travaux</h3><p>Solde, cotisation annuelle et part de chaque lot, comme le prévoit la loi du 30 juin 2022.</p><button class="arrow-link" type="button" data-demo data-demo-tab="fonds">Ouvrir dans la démo</button></article><article class="tm-item"><div class="phone"><div class="shot-vp" data-shot="m-cabinet" data-w="390" data-h="740"></div></div><h3>Votre image</h3><p>Votre logo, votre couleur, votre adresse et votre IBAN, repris dans l'espace et dans chaque lettre.</p><button class="arrow-link" type="button" data-demo data-demo-tab="cabinet">Ouvrir dans la démo</button></article></div>
+      <p class="swipe-hint">Faites glisser pour voir les cinq fonctions.</p>
     </div>
   </section>
 
@@ -501,11 +610,11 @@ tfoot td{font-weight:700;border-top:1px solid var(--ink);border-bottom:0;color:v
       <div class="tbl-wrap"><table class="cmp">
         <thead><tr><th scope="col"><span class="sr">Tâche</span></th><th scope="col">Avec un tableur</th><th scope="col" class="us">Avec Orion Syndic</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Répartir une facture</th><td>Formules recopiées pour chaque immeuble, centimes qui ne tombent pas juste</td><td class="us">Calcul automatique selon les millièmes, total exact</td></tr>
-          <tr><th scope="row">Appels de fonds</th><td>Un fichier par trimestre et par immeuble</td><td class="us">Créés en une fois pour tous les lots, avec l'échéance</td></tr>
-          <tr><th scope="row">Suivre les paiements</th><td>Relevés comparés ligne par ligne</td><td class="us">Retards visibles dès l'échéance passée</td></tr>
-          <tr><th scope="row">Relancer</th><td>Chaque lettre écrite à la main</td><td class="us">Trois niveaux de lettre, prêts avec votre IBAN</td></tr>
-          <tr><th scope="row">Fonds de travaux</th><td>Calcul à part, souvent oublié</td><td class="us">Solde et cotisation de chaque lot à jour</td></tr>
+          <tr><th scope="row">Répartir une facture</th><td data-label="Avec un tableur">Formules recopiées pour chaque immeuble, centimes qui ne tombent pas juste</td><td class="us" data-label="Avec Orion Syndic">Calcul automatique selon les millièmes, total exact</td></tr>
+          <tr><th scope="row">Appels de fonds</th><td data-label="Avec un tableur">Un fichier par trimestre et par immeuble</td><td class="us" data-label="Avec Orion Syndic">Créés en une fois pour tous les lots, avec l'échéance</td></tr>
+          <tr><th scope="row">Suivre les paiements</th><td data-label="Avec un tableur">Relevés comparés ligne par ligne</td><td class="us" data-label="Avec Orion Syndic">Retards visibles dès l'échéance passée</td></tr>
+          <tr><th scope="row">Relancer</th><td data-label="Avec un tableur">Chaque lettre écrite à la main</td><td class="us" data-label="Avec Orion Syndic">Trois niveaux de lettre, prêts avec votre IBAN</td></tr>
+          <tr><th scope="row">Fonds de travaux</th><td data-label="Avec un tableur">Calcul à part, souvent oublié</td><td class="us" data-label="Avec Orion Syndic">Solde et cotisation de chaque lot à jour</td></tr>
         </tbody></table></div>
     </div>
   </section>

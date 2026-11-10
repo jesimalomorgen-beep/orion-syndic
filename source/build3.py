@@ -93,6 +93,21 @@ script = script[:start] + r"""function renderHeader(view) {
 }
 """ + script[end:]
 
+rep('<div class="tbl-wrap"><table><thead><tr><th>Copropriétaire</th>', '<div class="tbl-wrap"><table class="lines"><thead><tr><th>Copropriétaire</th>')
+rep('map = { dashboard: [A, { tab: "dashboard" }], mobile: [A, { tab: "dashboard" }, true],', 'map = { dashboard: [A, { tab: "dashboard" }], mobile: [A, { tab: "dashboard" }, true], "m-depenses": [A, { tab: "depenses", depB: t.id, depSel: ass.id }, true], "m-appels": [A, { tab: "appels", apB: t.id }, true], "m-paiements": [A, { tab: "paiements", filter: "retard" }, true], "m-fonds": [A, { tab: "fonds", fB: t.id }, true], "m-cabinet": [A, { tab: "cabinet" }, true],')
+rep('<a class="btn btn-sm btn-blue" href="#inscription">Créer mon espace</a></div>`;\n}', '<a class="btn btn-sm btn-blue" href="#inscription">Créer mon espace</a></div>`;\n  $("#m-menu").innerHTML = `<a href="#produit">Produit</a><a href="#pour-qui">Pour qui</a><a href="#prix">Prix</a><a href="#faq">Questions fréquentes</a>${acc ? `<a href="#app">Mon espace</a>` : `<a href="#connexion">Se connecter</a>`}<a class="btn btn-blue btn-lg btn-block" href="#inscription">Créer mon espace</a><button class="btn btn-lg btn-block" type="button" data-demo style="margin-top:10px">Voir la démo</button>`;\n}')
+script += r"""
+/* ---------- menu téléphone ---------- */
+const menuBtn = $("#menu-btn"), mMenu = $("#m-menu");
+function setMenu(open) { mMenu.hidden = !open; menuBtn.setAttribute("aria-expanded", String(open)); document.body.classList.toggle("menu-open", open); }
+menuBtn.addEventListener("click", () => setMenu(mMenu.hidden));
+mMenu.addEventListener("click", e => { if (e.target.closest("a,button")) setMenu(false); });
+window.addEventListener("hashchange", () => setMenu(false));
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !mMenu.hidden) setMenu(false); });
+"""
+
+rep('root.innerHTML = appInner(acc);', 'root.innerHTML = appInner(acc);\n  const navEl = root.querySelector(".side-nav"), onEl = root.querySelector(".side-link.on"); if (navEl && onEl && MQ.matches) navEl.scrollLeft = onEl.offsetLeft - (navEl.clientWidth - onEl.clientWidth) / 2;')
+
 markup = (root / "build/v3.markup.html").read_text()
 logo = json.loads((root / "out/logo4/logo4_inline.json").read_text())
 fav = "data:image/svg+xml," + urllib.parse.quote(logo["favicon"])

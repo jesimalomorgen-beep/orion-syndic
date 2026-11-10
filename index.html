@@ -393,6 +393,112 @@ tfoot td{font-weight:700;border-top:1px solid var(--ink);border-bottom:0;color:v
 .app.m .tiles{grid-template-columns:1fr 1fr}
 .app.m .tile b{font-size:1.15rem}
 
+
+/* ---------- téléphone ---------- */
+.menu-btn{display:none;width:42px;height:42px;border-radius:12px;border:1px solid var(--line-2);background:var(--surface);cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:0;margin-left:8px}
+.menu-btn span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;transition:transform .2s,opacity .2s}
+.menu-btn[aria-expanded="true"] span:first-child{transform:translateY(3.5px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
+.m-menu{position:fixed;left:0;right:0;top:68px;bottom:0;z-index:39;background:var(--bg);padding:8px 20px 28px;overflow:auto;display:flex;flex-direction:column}
+.m-menu a:not(.btn){display:block;padding:18px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);font-size:1.2rem;font-weight:600}
+.m-menu .btn{margin-top:24px}
+body.menu-open{overflow:hidden}
+body[data-view="app"] .menu-btn{display:none!important}
+.tour-m{display:none}
+@media (max-width:920px){.menu-btn{display:inline-flex}}
+@media (max-width:980px){
+  .tour{display:none}
+  .tour-m{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -32px;padding:0 32px 10px;scrollbar-width:none}
+  .tour-m::-webkit-scrollbar{display:none}
+  .tm-item{flex:0 0 min(84%,380px);scroll-snap-align:start;background:var(--mist);border-radius:22px;padding:24px 22px 26px;display:flex;flex-direction:column}
+  .tm-item h3{font-size:1.3rem;letter-spacing:-.02em;margin-bottom:8px}
+  .tm-item p{color:var(--muted);font-size:.98rem;margin:0 0 20px;flex:1}
+  .tm-item .phone{position:relative;right:auto;bottom:auto;width:74%;max-width:250px;margin:0 auto 18px;border-radius:34px;padding:8px}
+  .tm-item .phone .shot-vp{border-radius:27px}
+  .tm-item .phone::before{top:15px;height:16px}
+  .swipe-hint{display:block;margin:6px 0 0;color:var(--muted);font-size:.88rem}
+}
+.swipe-hint{display:none}
+@media (max-width:640px){
+  .wrap{padding:0 20px}
+  .tour-m{margin:0 -20px;padding:0 20px 10px}
+  .top-actions{display:none}
+  .brand .logo{height:26px}
+  section.block{padding:76px 0}
+  .sec-head{margin-bottom:32px}
+  .sec-head p{font-size:1.02rem}
+  .hero{padding-top:48px}
+  .hero h1{font-size:2.65rem;line-height:1.02}
+  .hero-side p{font-size:1.04rem;margin-bottom:22px}
+  .hero-side .cta-row .btn{flex:1 1 100%}
+  .hero-price{font-size:.88rem;margin-top:14px}
+  .devices{max-width:270px;margin:44px auto -96px}
+  .laptop{display:none}
+  .phone{position:relative;right:auto;bottom:auto;width:100%;border-radius:44px;padding:10px}
+  .phone .shot-vp{border-radius:35px}
+  .phone::before{top:20px;height:24px}
+  .trust{padding:136px 0 44px}
+  .trust-grid{gap:18px}
+  .try{gap:28px}
+  .coupe{padding:18px 14px 14px;border-radius:16px}
+  .coupe-head{margin-bottom:16px}
+  .amount,.amount-in{width:100%}
+  .amount-in input{width:100%}
+  .facade{margin:0 6px;padding:8px;gap:8px}
+  .roof{margin:0 2px;height:38px}
+  .floor{grid-template-columns:30px 1fr 1fr;gap:8px}
+  .apt{padding:7px 9px}
+  .apt .part{font-size:.98rem}
+  .cmp thead{display:none}
+  .cmp,.cmp tbody,.cmp tr,.cmp th,.cmp td{display:block;width:100%}
+  .cmp tr{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+  .cmp tbody th{padding:16px 16px 6px;border:0;width:auto;font-size:1.05rem}
+  .cmp td{padding:8px 16px;border:0;font-size:.95rem}
+  .cmp td::before{content:attr(data-label);display:block;font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:2px}
+  .cmp td.us{margin-top:4px;padding:12px 16px 14px;border-radius:0}
+  .cmp td.us::before{color:var(--blue)}
+  .cmp tbody tr:last-child .us{border-radius:0}
+  .price{gap:32px}
+  .price-list li{font-size:.95rem}
+  .ex-table th,.ex-table td{padding:10px 8px}
+  .faq summary{font-size:1rem;padding:18px 0}
+  .closing{padding:72px 0}
+  .closing .cta-row .btn{flex:1 1 100%}
+  .auth{padding:28px 0 64px}
+  .auth-grid .sum{order:-1}
+  .modal{align-items:end;padding:0}
+  .modal-box{border-radius:22px 22px 0 0;max-height:92vh;overflow:auto;padding:22px 18px}
+  .modal-acts .btn{flex:1}
+  .top-cab{display:none}
+}
+/* application sur téléphone */
+.app.m{grid-template-columns:minmax(0,1fr)}
+.app.m .bswitch{flex-wrap:nowrap;overflow-x:auto;margin:0 -14px 16px;padding:0 14px 4px;scrollbar-width:none}
+.app.m .chip-btn{white-space:nowrap}
+.app.m th,.app.m td{padding:10px}
+.app.m .w-head{margin-bottom:16px}
+.app.m .w-head p{font-size:.9rem}
+.app.m .card-h{padding:12px 14px}
+.app.m .card-b{padding:14px}
+.app.m .ap-list{grid-template-columns:1fr}
+.app.m .inline-form{grid-template-columns:1fr 1fr}
+.app.m .inline-form .btn{grid-column:1/-1;width:100%}
+.app.m table.lines thead{display:none}
+.app.m table.lines,.app.m table.lines tbody{display:block}
+.app.m table.lines tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.app.m table.lines tbody tr:last-child{border-bottom:0}
+.app.m table.lines td{display:block;padding:0;border:0}
+.app.m table.lines td:nth-child(1){grid-column:1;grid-row:1;font-weight:600;color:var(--ink)}
+.app.m table.lines td:nth-child(5){grid-column:2;grid-row:1}
+.app.m table.lines td:nth-child(2){grid-column:1;grid-row:2;color:var(--muted);font-size:.85rem}
+.app.m table.lines td:nth-child(6){grid-column:2;grid-row:2;text-align:right}
+.app.m table.lines td:nth-child(3){grid-column:1;grid-row:3;color:var(--muted);font-size:.85rem}
+.app.m table.lines td:nth-child(3)::before{content:"Appel "}
+.app.m table.lines td:nth-child(4){grid-column:2;grid-row:3;text-align:right;color:var(--muted);font-size:.85rem}
+.app.m table.lines td:nth-child(7){grid-column:1/-1;grid-row:4;margin-top:10px}
+.app.m table.lines .acts{justify-content:stretch;flex-wrap:nowrap}
+.app.m table.lines .acts .btn{flex:1;padding:10px}
+
 .modal{position:fixed;inset:0;background:rgba(11,18,32,.55);display:grid;place-items:center;padding:16px;z-index:50}
 .modal-box{background:var(--surface);border-radius:18px;max-width:620px;width:100%;padding:26px;border:1px solid var(--line);box-shadow:var(--lift)}
 .modal-box h3{font-size:1.35rem;margin-bottom:6px}
@@ -403,7 +509,8 @@ tfoot td{font-weight:700;border-top:1px solid var(--ink);border-bottom:0;color:v
 </style>
 </head>
 <body data-view="accueil">
-<header class="top"><div class="wrap top-in"><a class="brand" href="#accueil" aria-label="Orion Syndic, accueil"><svg class="logo" viewBox="0 0 331.83 64" role="img" aria-label="Orion Syndic"><path d="M8 30 32 9 37 13.4V55H8Z" style="fill:var(--logo-ink);stroke:var(--logo-ink)" stroke-width="3" stroke-linejoin="round"/><path d="M41 16.9 56 30V55H41Z" style="fill:var(--logo-accent);stroke:var(--logo-accent)" stroke-width="3" stroke-linejoin="round"/><path d="M100.34 34.69C100.34 26.21 95.76 21.58 87.94 21.58C80.3 21.58 75.62 26.31 75.62 34.5C75.62 42.74 80.3 47.42 87.98 47.42C95.57 47.42 100.34 42.69 100.34 34.69ZM93.86 34.59C93.86 39.27 91.45 42.19 87.98 42.19C84.46 42.19 82.1 39.27 82.1 34.5C82.1 29.73 84.46 26.81 87.98 26.81C91.55 26.81 93.86 29.69 93.86 34.59ZM119.07 28.2V21.63C118.7 21.58 118.46 21.58 118.28 21.58C115.32 21.58 112.72 23.53 111.34 26.91V22H104.85V47H111.34V33.71C111.34 29.92 113.23 28.02 117.03 28.02C117.72 28.02 118.19 28.06 119.07 28.2ZM129.18 47V22H122.7V47ZM129.27 18.99V12.51H122.79V18.99ZM158.46 34.69C158.46 26.21 153.88 21.58 146.05 21.58C138.41 21.58 133.74 26.31 133.74 34.5C133.74 42.74 138.41 47.42 146.1 47.42C153.69 47.42 158.46 42.69 158.46 34.69ZM151.98 34.59C151.98 39.27 149.57 42.19 146.1 42.19C142.58 42.19 140.22 39.27 140.22 34.5C140.22 29.73 142.58 26.81 146.1 26.81C149.66 26.81 151.98 29.69 151.98 34.59ZM185.33 47V30.24C185.33 24.73 182.28 21.58 176.95 21.58C173.57 21.58 171.3 22.83 169.45 25.61V22H162.97V47H169.45V32C169.45 29.04 171.54 27.09 174.68 27.09C177.46 27.09 178.85 28.62 178.85 31.58V47Z" style="fill:var(--logo-ink)"/><path d="M221.63 40.19C221.63 36.58 219.59 34.78 214.78 33.62L211.07 32.74C207.92 32 206.58 30.98 206.58 29.27C206.58 27.05 208.57 25.61 211.72 25.61C214.82 25.61 216.49 26.95 216.58 29.5H220.66C220.61 24.73 217.46 22.05 211.86 22.05C206.21 22.05 202.55 24.96 202.55 29.45C202.55 33.25 204.5 35.06 210.24 36.44L213.85 37.32C216.54 37.97 217.6 38.76 217.6 40.52C217.6 42.79 215.33 44.13 211.95 44.13C208.48 44.13 206.54 43.3 206.03 39.59H201.95C202.14 45.19 205.29 47.69 211.63 47.69C217.74 47.69 221.63 44.87 221.63 40.19ZM245.31 22.74H241.14L234.43 41.63L228.22 22.74H224.1L232.3 47.09L230.81 50.94C230.17 52.65 229.38 53.3 227.71 53.3C227.16 53.3 226.51 53.2 225.68 53.02V56.49C226.46 56.91 227.25 57.09 228.27 57.09C231 57.09 233.22 55.56 234.52 52.09ZM268.52 47V28.67C268.52 24.64 265.51 22.05 260.84 22.05C257.22 22.05 254.91 23.44 252.78 26.81V22.74H249.21V47H253.06V33.62C253.06 28.67 255.74 25.43 259.68 25.43C262.73 25.43 264.68 27.28 264.68 30.19V47ZM294.28 47V13.25H290.44V25.8C288.82 23.34 286.23 22.05 282.99 22.05C276.69 22.05 272.57 26.91 272.57 34.64C272.57 42.83 276.6 47.69 283.12 47.69C286.46 47.69 288.77 46.44 290.86 43.44V47ZM290.44 34.96C290.44 40.56 287.75 44.08 283.68 44.08C279.42 44.08 276.6 40.52 276.6 34.87C276.6 29.22 279.42 25.66 283.63 25.66C287.8 25.66 290.44 29.36 290.44 34.96ZM303.84 47V22.74H300V47ZM304.35 19.08V14.27H299.53V19.08ZM328.77 38.67H324.88C324.23 42.56 322.24 44.13 318.95 44.13C314.69 44.13 312.15 40.84 312.15 35.1C312.15 29.04 314.65 25.61 318.86 25.61C322.1 25.61 324.14 27.51 324.6 30.89H328.49C328.03 24.96 324.32 22.05 318.91 22.05C312.38 22.05 308.12 27.05 308.12 35.1C308.12 42.93 312.29 47.69 318.86 47.69C324.65 47.69 328.3 44.22 328.77 38.67Z" style="fill:var(--logo-ink)"/></svg></a><span class="demo-tag" title="Aucun paiement réel, les données restent dans ce navigateur">Démo</span><div id="top-nav"></div></div></header>
+<header class="top"><div class="wrap top-in"><a class="brand" href="#accueil" aria-label="Orion Syndic, accueil"><svg class="logo" viewBox="0 0 331.83 64" role="img" aria-label="Orion Syndic"><path d="M8 30 32 9 37 13.4V55H8Z" style="fill:var(--logo-ink);stroke:var(--logo-ink)" stroke-width="3" stroke-linejoin="round"/><path d="M41 16.9 56 30V55H41Z" style="fill:var(--logo-accent);stroke:var(--logo-accent)" stroke-width="3" stroke-linejoin="round"/><path d="M100.34 34.69C100.34 26.21 95.76 21.58 87.94 21.58C80.3 21.58 75.62 26.31 75.62 34.5C75.62 42.74 80.3 47.42 87.98 47.42C95.57 47.42 100.34 42.69 100.34 34.69ZM93.86 34.59C93.86 39.27 91.45 42.19 87.98 42.19C84.46 42.19 82.1 39.27 82.1 34.5C82.1 29.73 84.46 26.81 87.98 26.81C91.55 26.81 93.86 29.69 93.86 34.59ZM119.07 28.2V21.63C118.7 21.58 118.46 21.58 118.28 21.58C115.32 21.58 112.72 23.53 111.34 26.91V22H104.85V47H111.34V33.71C111.34 29.92 113.23 28.02 117.03 28.02C117.72 28.02 118.19 28.06 119.07 28.2ZM129.18 47V22H122.7V47ZM129.27 18.99V12.51H122.79V18.99ZM158.46 34.69C158.46 26.21 153.88 21.58 146.05 21.58C138.41 21.58 133.74 26.31 133.74 34.5C133.74 42.74 138.41 47.42 146.1 47.42C153.69 47.42 158.46 42.69 158.46 34.69ZM151.98 34.59C151.98 39.27 149.57 42.19 146.1 42.19C142.58 42.19 140.22 39.27 140.22 34.5C140.22 29.73 142.58 26.81 146.1 26.81C149.66 26.81 151.98 29.69 151.98 34.59ZM185.33 47V30.24C185.33 24.73 182.28 21.58 176.95 21.58C173.57 21.58 171.3 22.83 169.45 25.61V22H162.97V47H169.45V32C169.45 29.04 171.54 27.09 174.68 27.09C177.46 27.09 178.85 28.62 178.85 31.58V47Z" style="fill:var(--logo-ink)"/><path d="M221.63 40.19C221.63 36.58 219.59 34.78 214.78 33.62L211.07 32.74C207.92 32 206.58 30.98 206.58 29.27C206.58 27.05 208.57 25.61 211.72 25.61C214.82 25.61 216.49 26.95 216.58 29.5H220.66C220.61 24.73 217.46 22.05 211.86 22.05C206.21 22.05 202.55 24.96 202.55 29.45C202.55 33.25 204.5 35.06 210.24 36.44L213.85 37.32C216.54 37.97 217.6 38.76 217.6 40.52C217.6 42.79 215.33 44.13 211.95 44.13C208.48 44.13 206.54 43.3 206.03 39.59H201.95C202.14 45.19 205.29 47.69 211.63 47.69C217.74 47.69 221.63 44.87 221.63 40.19ZM245.31 22.74H241.14L234.43 41.63L228.22 22.74H224.1L232.3 47.09L230.81 50.94C230.17 52.65 229.38 53.3 227.71 53.3C227.16 53.3 226.51 53.2 225.68 53.02V56.49C226.46 56.91 227.25 57.09 228.27 57.09C231 57.09 233.22 55.56 234.52 52.09ZM268.52 47V28.67C268.52 24.64 265.51 22.05 260.84 22.05C257.22 22.05 254.91 23.44 252.78 26.81V22.74H249.21V47H253.06V33.62C253.06 28.67 255.74 25.43 259.68 25.43C262.73 25.43 264.68 27.28 264.68 30.19V47ZM294.28 47V13.25H290.44V25.8C288.82 23.34 286.23 22.05 282.99 22.05C276.69 22.05 272.57 26.91 272.57 34.64C272.57 42.83 276.6 47.69 283.12 47.69C286.46 47.69 288.77 46.44 290.86 43.44V47ZM290.44 34.96C290.44 40.56 287.75 44.08 283.68 44.08C279.42 44.08 276.6 40.52 276.6 34.87C276.6 29.22 279.42 25.66 283.63 25.66C287.8 25.66 290.44 29.36 290.44 34.96ZM303.84 47V22.74H300V47ZM304.35 19.08V14.27H299.53V19.08ZM328.77 38.67H324.88C324.23 42.56 322.24 44.13 318.95 44.13C314.69 44.13 312.15 40.84 312.15 35.1C312.15 29.04 314.65 25.61 318.86 25.61C322.1 25.61 324.14 27.51 324.6 30.89H328.49C328.03 24.96 324.32 22.05 318.91 22.05C312.38 22.05 308.12 27.05 308.12 35.1C308.12 42.93 312.29 47.69 318.86 47.69C324.65 47.69 328.3 44.22 328.77 38.67Z" style="fill:var(--logo-ink)"/></svg></a><span class="demo-tag" title="Aucun paiement réel, les données restent dans ce navigateur">Démo</span><div id="top-nav"></div><button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="m-menu"><span></span><span></span></button></div></header>
+<nav class="m-menu" id="m-menu" aria-label="Menu" hidden></nav>
 
 <main>
 <div id="v-accueil">
@@ -452,6 +559,8 @@ tfoot td{font-weight:700;border-top:1px solid var(--ink);border-bottom:0;color:v
           <div class="tour-panel stage" role="tabpanel" id="tp-5" aria-labelledby="tt-5" hidden><div class="shot-frame"><div class="shot-vp" data-shot="cabinet" data-solo="1" data-w="1040" data-h="680"></div></div></div>
         </div>
       </div>
+      <div class="tour-m" aria-label="Fonctions"><article class="tm-item"><div class="phone"><div class="shot-vp" data-shot="m-depenses" data-w="390" data-h="740"></div></div><h3>Répartition des factures</h3><p>Saisissez le fournisseur et le montant. La part de chaque lot est calculée selon ses millièmes, au centime près.</p><button class="arrow-link" type="button" data-demo data-demo-tab="depenses">Ouvrir dans la démo</button></article><article class="tm-item"><div class="phone"><div class="shot-vp" data-shot="m-appels" data-w="390" data-h="740"></div></div><h3>Appels de fonds</h3><p>Indiquez le montant et l'échéance. Chaque copropriétaire reçoit sa part, et vous voyez qui a payé.</p><button class="arrow-link" type="button" data-demo data-demo-tab="appels">Ouvrir dans la démo</button></article><article class="tm-item"><div class="phone"><div class="shot-vp" data-shot="m-paiements" data-w="390" data-h="740"></div></div><h3>Relances</h3><p>Rappel amiable, second rappel, mise en demeure : la bonne lettre est prête, avec votre IBAN.</p><button class="arrow-link" type="button" data-demo data-demo-tab="paiements">Ouvrir dans la démo</button></article><article class="tm-item"><div class="phone"><div class="shot-vp" data-shot="m-fonds" data-w="390" data-h="740"></div></div><h3>Fonds de travaux</h3><p>Solde, cotisation annuelle et part de chaque lot, comme le prévoit la loi du 30 juin 2022.</p><button class="arrow-link" type="button" data-demo data-demo-tab="fonds">Ouvrir dans la démo</button></article><article class="tm-item"><div class="phone"><div class="shot-vp" data-shot="m-cabinet" data-w="390" data-h="740"></div></div><h3>Votre image</h3><p>Votre logo, votre couleur, votre adresse et votre IBAN, repris dans l'espace et dans chaque lettre.</p><button class="arrow-link" type="button" data-demo data-demo-tab="cabinet">Ouvrir dans la démo</button></article></div>
+      <p class="swipe-hint">Faites glisser pour voir les cinq fonctions.</p>
     </div>
   </section>
 
@@ -501,11 +610,11 @@ tfoot td{font-weight:700;border-top:1px solid var(--ink);border-bottom:0;color:v
       <div class="tbl-wrap"><table class="cmp">
         <thead><tr><th scope="col"><span class="sr">Tâche</span></th><th scope="col">Avec un tableur</th><th scope="col" class="us">Avec Orion Syndic</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Répartir une facture</th><td>Formules recopiées pour chaque immeuble, centimes qui ne tombent pas juste</td><td class="us">Calcul automatique selon les millièmes, total exact</td></tr>
-          <tr><th scope="row">Appels de fonds</th><td>Un fichier par trimestre et par immeuble</td><td class="us">Créés en une fois pour tous les lots, avec l'échéance</td></tr>
-          <tr><th scope="row">Suivre les paiements</th><td>Relevés comparés ligne par ligne</td><td class="us">Retards visibles dès l'échéance passée</td></tr>
-          <tr><th scope="row">Relancer</th><td>Chaque lettre écrite à la main</td><td class="us">Trois niveaux de lettre, prêts avec votre IBAN</td></tr>
-          <tr><th scope="row">Fonds de travaux</th><td>Calcul à part, souvent oublié</td><td class="us">Solde et cotisation de chaque lot à jour</td></tr>
+          <tr><th scope="row">Répartir une facture</th><td data-label="Avec un tableur">Formules recopiées pour chaque immeuble, centimes qui ne tombent pas juste</td><td class="us" data-label="Avec Orion Syndic">Calcul automatique selon les millièmes, total exact</td></tr>
+          <tr><th scope="row">Appels de fonds</th><td data-label="Avec un tableur">Un fichier par trimestre et par immeuble</td><td class="us" data-label="Avec Orion Syndic">Créés en une fois pour tous les lots, avec l'échéance</td></tr>
+          <tr><th scope="row">Suivre les paiements</th><td data-label="Avec un tableur">Relevés comparés ligne par ligne</td><td class="us" data-label="Avec Orion Syndic">Retards visibles dès l'échéance passée</td></tr>
+          <tr><th scope="row">Relancer</th><td data-label="Avec un tableur">Chaque lettre écrite à la main</td><td class="us" data-label="Avec Orion Syndic">Trois niveaux de lettre, prêts avec votre IBAN</td></tr>
+          <tr><th scope="row">Fonds de travaux</th><td data-label="Avec un tableur">Calcul à part, souvent oublié</td><td class="us" data-label="Avec Orion Syndic">Solde et cotisation de chaque lot à jour</td></tr>
         </tbody></table></div>
     </div>
   </section>
@@ -765,7 +874,7 @@ const head = (title, sub, right = "") => `<div class="w-head"><div><h2>${title}<
 const needB = title => head(title) + `<div class="empty"><p>Ajoutez d'abord un immeuble avec ses lots.</p><div class="acts" style="justify-content:flex-start"><button class="btn btn-ink" data-act="goAddB">Ajouter un immeuble</button><button class="btn" data-act="loadSample">Charger l'exemple</button></div></div>`;
 
 function linesTable(items, hideB) {
-  return `<div class="tbl-wrap"><table><thead><tr><th>Copropriétaire</th><th>${hideB ? "Lot" : "Immeuble et lot"}</th><th>Appel</th><th>Échéance</th><th class="r">Montant</th><th>Statut</th><th class="r">Actions</th></tr></thead><tbody>${items.map(x => {
+  return `<div class="tbl-wrap"><table class="lines"><thead><tr><th>Copropriétaire</th><th>${hideB ? "Lot" : "Immeuble et lot"}</th><th>Appel</th><th>Échéance</th><th class="r">Montant</th><th>Statut</th><th class="r">Actions</th></tr></thead><tbody>${items.map(x => {
     const ids = `data-a="${x.a.id}" data-l="${x.line.lotId}"`;
     const acts = x.line.paye ? `<button class="btn btn-sm" data-act="pay" ${ids}>Annuler</button>`
       : `${x.st.k === "retard" ? `<button class="btn btn-sm" data-act="remind" ${ids}>Relancer</button>` : ""}<button class="btn btn-sm btn-ink" data-act="pay" ${ids}>Marquer payé</button>`;
@@ -923,6 +1032,7 @@ function renderApp() {
   const root = $("#app-root");
   root.setAttribute("style", brandVars(acc.brand && acc.brand.color)); root.classList.toggle("m", MQ.matches);
   root.innerHTML = appInner(acc);
+  const navEl = root.querySelector(".side-nav"), onEl = root.querySelector(".side-link.on"); if (navEl && onEl && MQ.matches) navEl.scrollLeft = onEl.offsetLeft - (navEl.clientWidth - onEl.clientWidth) / 2;
   renderHeader("app");
 }
 
@@ -939,7 +1049,7 @@ function shotHTML(acc, st, solo, w, mobile) {
 function buildShots() {
   const A = demoAccount("");
   const t = A.buildings[0], ass = t.depenses.find(d => d.categorie === "Assurance");
-  const map = { dashboard: [A, { tab: "dashboard" }], mobile: [A, { tab: "dashboard" }, true], depenses: [A, { tab: "depenses", depB: t.id, depSel: ass.id }], appels: [A, { tab: "appels", apB: t.id }], paiements: [A, { tab: "paiements", filter: "retard" }], fonds: [A, { tab: "fonds", fB: t.id }], cabinet: [A, { tab: "cabinet" }] };
+  const map = { dashboard: [A, { tab: "dashboard" }], mobile: [A, { tab: "dashboard" }, true], "m-depenses": [A, { tab: "depenses", depB: t.id, depSel: ass.id }, true], "m-appels": [A, { tab: "appels", apB: t.id }, true], "m-paiements": [A, { tab: "paiements", filter: "retard" }, true], "m-fonds": [A, { tab: "fonds", fB: t.id }, true], "m-cabinet": [A, { tab: "cabinet" }, true], depenses: [A, { tab: "depenses", depB: t.id, depSel: ass.id }], appels: [A, { tab: "appels", apB: t.id }], paiements: [A, { tab: "paiements", filter: "retard" }], fonds: [A, { tab: "fonds", fB: t.id }], cabinet: [A, { tab: "cabinet" }] };
   $$(".shot-vp").forEach(vp => { const m = map[vp.dataset.shot]; if (m) vp.innerHTML = shotHTML(m[0], m[1], vp.dataset.solo === "1", +vp.dataset.w || 1180, !!m[2]); });
   const fit = vp => { const w = vp.clientWidth, inner = vp.firstElementChild; if (!w || !inner) return; const W = +vp.dataset.w || 1180, H = +vp.dataset.h || 740, s = w / W; inner.style.transform = `scale(${s})`; vp.style.height = Math.round(H * s) + "px"; };
   if ("ResizeObserver" in window) { const ro = new ResizeObserver(es => es.forEach(e => fit(e.target))); $$(".shot-vp").forEach(vp => ro.observe(vp)); }
@@ -956,6 +1066,7 @@ function renderHeader(view) {
   const nav = $("#top-nav"), acc = currentAccount();
   if (view === "app" && acc) { nav.innerHTML = `<span class="top-cab" style="${brandVars(acc.brand && acc.brand.color)}">${cabMark(acc, "sm")}<span>${esc(acc.cabinet)}</span></span><button class="btn btn-sm btn-line" type="button" data-logout>Déconnexion</button>`; return; }
   nav.innerHTML = `<nav class="top-links" aria-label="Sections"><a href="#produit">Produit</a><a href="#pour-qui">Pour qui</a><a href="#prix">Prix</a><a href="#faq">FAQ</a></nav><div class="top-actions">${acc ? `<a class="top-login" href="#app">Mon espace</a>` : `<a class="top-login" href="#connexion">Se connecter</a>`}<a class="btn btn-sm btn-blue" href="#inscription">Créer mon espace</a></div>`;
+  $("#m-menu").innerHTML = `<a href="#produit">Produit</a><a href="#pour-qui">Pour qui</a><a href="#prix">Prix</a><a href="#faq">Questions fréquentes</a>${acc ? `<a href="#app">Mon espace</a>` : `<a href="#connexion">Se connecter</a>`}<a class="btn btn-blue btn-lg btn-block" href="#inscription">Créer mon espace</a><button class="btn btn-lg btn-block" type="button" data-demo style="margin-top:10px">Voir la démo</button>`;
 }
 const SECTIONS = ["accueil", "produit", "essayer", "pour-qui", "comparer", "prix", "faq", "contact"];
 function show(view) {
@@ -1253,6 +1364,14 @@ $$("[data-preset]").forEach(b => b.addEventListener("click", () => calcUpdate(b.
   heroUpdate(false); calcUpdate(180); buildShots(); route();
   window.addEventListener("hashchange", route);
 })();
+
+/* ---------- menu téléphone ---------- */
+const menuBtn = $("#menu-btn"), mMenu = $("#m-menu");
+function setMenu(open) { mMenu.hidden = !open; menuBtn.setAttribute("aria-expanded", String(open)); document.body.classList.toggle("menu-open", open); }
+menuBtn.addEventListener("click", () => setMenu(mMenu.hidden));
+mMenu.addEventListener("click", e => { if (e.target.closest("a,button")) setMenu(false); });
+window.addEventListener("hashchange", () => setMenu(false));
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !mMenu.hidden) setMenu(false); });
 </script>
 </body>
 </html>
