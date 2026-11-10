@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Orion Syndic</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%20width%3D%2264%22%20height%3D%2264%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%231D3FE0%22/%3E%3Cg%20transform%3D%22translate%288.3%208.6%29%20scale%28.74%29%22%3E%3Cpath%20d%3D%22M8%2030%2032%209%2037%2013.4V55H8Z%22%20fill%3D%22%23FFFFFF%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M41%2016.9%2056%2030V55H41Z%22%20fill%3D%22%238EA4FF%22%20stroke%3D%22%238EA4FF%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,7 +41,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip;font-feature-settings:"tnum" 0}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip;touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%;font-feature-settings:"tnum" 0}
 h1,h2,h3,h4{color:var(--ink);margin:0;line-height:1.1;text-wrap:balance;letter-spacing:-.025em;font-weight:600}
 p{margin:0 0 1em}
 a{color:inherit}
@@ -273,7 +273,7 @@ body[data-view="app"] .foot{display:none}
 .field{display:grid;gap:6px;margin-bottom:16px;min-width:0}
 .field label,.lbl{font-weight:600;font-size:.9rem;color:var(--ink)}
 .field small{color:var(--muted);font-size:.8rem}
-input[type=text],input[type=email],input[type=password],input[type=number],input[type=date],input[type=tel],select,textarea{font:inherit;font-size:.97rem;padding:11px 13px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface);color:var(--ink);width:100%;min-width:0;transition:border-color .15s,box-shadow .15s}
+input[type=text],input[type=email],input[type=password],input[type=number],input[type=date],input[type=tel],select,textarea{font:inherit;font-size:16px;padding:11px 13px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface);color:var(--ink);width:100%;min-width:0;transition:border-color .15s,box-shadow .15s}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-soft)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form-err{color:var(--bad);font-weight:600;min-height:1.3em;margin:2px 0 10px;font-size:.9rem}

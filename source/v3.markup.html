@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Orion Syndic</title>
 <link rel="icon" href="{{FAVICON}}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,7 +41,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip;font-feature-settings:"tnum" 0}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip;touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%;font-feature-settings:"tnum" 0}
 h1,h2,h3,h4{color:var(--ink);margin:0;line-height:1.1;text-wrap:balance;letter-spacing:-.025em;font-weight:600}
 p{margin:0 0 1em}
 a{color:inherit}
@@ -273,7 +273,7 @@ body[data-view="app"] .foot{display:none}
 .field{display:grid;gap:6px;margin-bottom:16px;min-width:0}
 .field label,.lbl{font-weight:600;font-size:.9rem;color:var(--ink)}
 .field small{color:var(--muted);font-size:.8rem}
-input[type=text],input[type=email],input[type=password],input[type=number],input[type=date],input[type=tel],select,textarea{font:inherit;font-size:.97rem;padding:11px 13px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface);color:var(--ink);width:100%;min-width:0;transition:border-color .15s,box-shadow .15s}
+input[type=text],input[type=email],input[type=password],input[type=number],input[type=date],input[type=tel],select,textarea{font:inherit;font-size:16px;padding:11px 13px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface);color:var(--ink);width:100%;min-width:0;transition:border-color .15s,box-shadow .15s}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-soft)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form-err{color:var(--bad);font-weight:600;min-height:1.3em;margin:2px 0 10px;font-size:.9rem}
